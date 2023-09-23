@@ -28,9 +28,13 @@ const AccountSetup = props => {
   }
 
   const onDone = () => {
+
+  
     console.log("Done and token saved " )
 
-    AsyncStorage.setItem('userToken' , "dfsgvs");
+    props.navigation.navigate('DashBoard')
+
+    // AsyncStorage.setItem('userToken' , "dfsgvs");
 
 
 
@@ -38,6 +42,8 @@ const AccountSetup = props => {
 
   return (
     <SafeAreaView style={AccountSetupStyle.container}>
+
+
       <View style={AccountSetupStyle.view1}>
         <ScrollView automaticallyAdjustKeyboardInsets={true}>
 
@@ -65,6 +71,15 @@ const AccountSetup = props => {
             onInputChange={onNameChange}
           />
 
+          <HeadingBox
+            props={props}
+            headingText={'Agency Name'}
+            inputplaceholder={'Enter Agency Name '}
+            onInputChange={onNameChange}
+          />
+
+
+
 
         </ScrollView>
       </View>
@@ -72,6 +87,8 @@ const AccountSetup = props => {
       <View style={AccountSetupStyle.view2}>
         <Button onclick={onDone} disabled={ (name != "" && phone != "")  ? false : true} btntext="Done" buttonctn={AccountSetupStyle.buttonCtn} />
       </View>
+
+
     </SafeAreaView>
   );
 };

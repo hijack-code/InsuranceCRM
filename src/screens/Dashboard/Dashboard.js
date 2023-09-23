@@ -32,6 +32,7 @@ const DashBoard = props => {
         headerShown: false,
         tabBarInactiveTintColor: '#ffffff',
         tabBarShowLabel: false,
+        keyboardHidesTabBar: false,
         tabBarStyle: {
           borderTopWidth: 0,
           position: 'absolute',

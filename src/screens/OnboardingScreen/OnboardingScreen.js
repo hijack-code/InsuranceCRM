@@ -40,6 +40,11 @@ const OnboardingScreen = (props,{navigation}) => {
   return (
     <SafeAreaView style={OnboardingStyle.container}>
       <ScrollView automaticallyAdjustKeyboardInsets={true}>
+
+
+
+
+
         <LogoViewer
           Logosource={LogoImage}
           containerstyle={OnboardingStyle.logoImgContainer}
@@ -51,15 +56,21 @@ const OnboardingScreen = (props,{navigation}) => {
           logostyle={OnboardingStyle.loginImg}
         />
 
+
+
+
         <Text style={OnboardingStyle.loginText}>Log in</Text>
  
 
 
 
 
-          <InputBox inputplaceholder={"Enter email ID"} onChangeText={emailTextHandler}/>
+        <InputBox inputplaceholder={"Enter email ID"} onChangeText={emailTextHandler}/>
 
-          <Button  btntext="Send OTP" disabled={email != "" ? false : true} onclick={() => { props.navigation.navigate('AccountSetup')}}  buttonctn={OnboardingStyle.buttonCtn} />
+
+
+        <Button  btntext="Send OTP" disabled={email != "" ? false : true} onclick={() => { props.navigation.navigate('AccountSetup')}}  buttonctn={OnboardingStyle.buttonCtn} />
+
 
 
 
@@ -71,6 +82,9 @@ const OnboardingScreen = (props,{navigation}) => {
         <View style={[OnboardingStyle.buttonCtn, {marginTop: 0}]}>
           <ButtonIcon  disabled={false} Logosource={GoogleSvg} />
         </View>
+
+
+
       </ScrollView>
     </SafeAreaView>
   );

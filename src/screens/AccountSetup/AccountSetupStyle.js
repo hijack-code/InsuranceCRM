@@ -44,6 +44,7 @@ AccountSetupStyle = StyleSheet.create({
           view2:{
 
             backgroundColor: 'white',
+            marginBottom:responsiveHeight(2)
           }
     })
 
