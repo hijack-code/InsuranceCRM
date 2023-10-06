@@ -50,6 +50,9 @@ const DashBoard = props => {
           },
         },
       }}>
+
+
+
       <Tab.Screen
         name="Home"
         children={() => <HomeScreen props={props} />}
@@ -64,7 +67,7 @@ const DashBoard = props => {
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Portfolio"
         children={() => <AccountSetup props={props} />}
         options={{
@@ -76,7 +79,7 @@ const DashBoard = props => {
             }
           },
         }}
-      />
+      /> */}
 
       <Tab.Screen
         name="HomeScreen"
@@ -104,6 +107,9 @@ const DashBoard = props => {
           },
         }}
       />
+
+
+
     </Tab.Navigator>
   );
 };
