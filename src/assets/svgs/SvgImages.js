@@ -184,3 +184,24 @@ export  function LoginImage(props) {
       </Svg>
     )
   }
+
+
+
+  export function BackSvg(props){
+    return(
+      <Svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        d="M21 11.596a1.161 1.161 0 00-1.16-1.16H7.11l4.718-4.4a1.16 1.16 0 10-1.585-1.694L3.37 10.746a1.16 1.16 0 000 1.697l6.874 6.408a1.161 1.161 0 101.585-1.698l-4.719-4.396h12.73A1.16 1.16 0 0021 11.597z"
+        fill="#000"
+        opacity={0.6}
+      />
+    </Svg>
+    )
+  }

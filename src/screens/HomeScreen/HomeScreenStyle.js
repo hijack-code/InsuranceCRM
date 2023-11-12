@@ -23,6 +23,7 @@ HomeScreenStyle = StyleSheet.create({
         container: {
             flex:1,
             backgroundColor: '#f5f5f5',
+            backgroundColor:"pink"
       
           },
           logoImgContainer:{
@@ -51,7 +52,7 @@ HomeScreenStyle = StyleSheet.create({
             width:responsiveWidth(70),
             marginLeft:responsiveWidth(1),
 
-           
+
           },
           counterCtn:{
             display:"flex",
@@ -93,8 +94,7 @@ HomeScreenStyle = StyleSheet.create({
             color:"#007FFF",
           },
           searchSection: {
-            flex: 1,
-            marginTop:responsiveHeight(2),
+            marginTop:responsiveHeight(4),
             borderRadius:responsiveWidth(2.5),
             flexDirection: 'row',
             justifyContent: 'center',
@@ -120,7 +120,10 @@ HomeScreenStyle = StyleSheet.create({
 
         },
         clientlistCtn:{
-          backgroundColor:"lightseagreen"
+          
+          backgroundColor:"white",
+          marginTop:responsiveHeight(1),
+          height:responsiveHeight(40)
         }
 
        

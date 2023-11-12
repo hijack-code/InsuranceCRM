@@ -11,6 +11,7 @@ import {
   } from "react-native-responsive-dimensions";
 
 
+  
 
 
 const Button = ({disabled = true, onclick=  () => {console.log("checking  default logingg in!");} , buttonctn, btntext="Button" }) => {
@@ -24,9 +25,6 @@ const Button = ({disabled = true, onclick=  () => {console.log("checking  defaul
             </TouchableOpacity>
         </View>
 
-   
-
-    
 
   );
 };

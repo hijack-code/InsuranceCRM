@@ -5,6 +5,7 @@ import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import AccountSetup from '../screens/AccountSetup/AccountSetup.js';
 import DashBoard from '../screens/Dashboard/Dashboard.js';
+import ClientInfo from '../screens/ClientInfo/ClientInfo.js';
 
 
 
@@ -20,6 +21,8 @@ const AuthStack = () => {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="AccountSetup" component={AccountSetup} />
       <Stack.Screen name="DashBoard" component={DashBoard} />
+
+      <Stack.Screen name="ClientInfo" component={ClientInfo} />
 
 
     </Stack.Navigator>
