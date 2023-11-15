@@ -41,13 +41,15 @@ const Buttonstyles = StyleSheet.create({
     title: {
      
       borderRadius: 6,
-      color: 'black',
+      color: 'white',
       textAlign: 'center',
-      fontSize: responsiveFontSize(2),
+      fontSize: responsiveFontSize(1.5),
       fontFamily:'Rubik-Regular',
     },
     buttonstyle:{
         backgroundColor:"#D6D6D6",
+        paddingHorizontal:responsiveWidth(5),
+
         height: responsiveHeight(6),
         borderRadius:responsiveHeight(1),
         alignItems:"center",

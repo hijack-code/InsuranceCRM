@@ -6,6 +6,7 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import AccountSetup from '../screens/AccountSetup/AccountSetup.js';
 import DashBoard from '../screens/Dashboard/Dashboard.js';
 import ClientInfo from '../screens/ClientInfo/ClientInfo.js';
+import AddClient from '../screens/Addnewclient/AddClient.js';
 
 
 
@@ -23,6 +24,7 @@ const AuthStack = () => {
       <Stack.Screen name="DashBoard" component={DashBoard} />
 
       <Stack.Screen name="ClientInfo" component={ClientInfo} />
+      <Stack.Screen name="AddClient" component={AddClient} />
 
 
     </Stack.Navigator>

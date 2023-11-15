@@ -23,6 +23,8 @@ import ListView from '../../components/molecules/ListView';
 
 const HomeScreen = (props) => {
 
+  console.log(props ,"PROPSS")
+
   const data = [
     { id: '1', title: 'Gaurav kumar yadav', phone:9123141113 },
     { id: '2', title: 'Guarav',phone:928727232 },
@@ -77,7 +79,7 @@ const HomeScreen = (props) => {
         <View style={HomeScreenStyle.listingMainCtn}>
           <View style={HomeScreenStyle.listingTitleCtn}>
             <Text style={HomeScreenStyle.titleText}>Clients</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {     props.props.navigation.navigate('AddClient') }}>
               <Text style={HomeScreenStyle.addClientText}>
                 Add New Client +
               </Text>

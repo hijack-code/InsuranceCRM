@@ -11,6 +11,8 @@ export const Colors = {
     background: '#f2f2f2',
     text: '#333333',
     // Add more colors as needed
+    activeprimary:'#007FFF',
+    white:'#fff'
 
 
 

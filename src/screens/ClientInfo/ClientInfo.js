@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {View, useWindowDimensions, StyleSheet, Image, Text} from 'react-native';
+import {View, useWindowDimensions, StyleSheet, Image, Text,TouchableOpacity} from 'react-native';
 import {
   responsiveHeight,
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {TabView, SceneMap,TabBar} from 'react-native-tab-view';
 import {windowWidth} from '../../utils/Dimensions';
 import {BackSvg} from '../../assets/svgs/SvgImages';
 import LogoViewer from '../../components/common/LogoViewer';
@@ -14,6 +14,7 @@ import Clientdetails from './Tabscreens/Clientdetails';
 import Events from './Tabscreens/Events';
 import Transaction from './Tabscreens/Transaction';
 import Beneficiary from './Tabscreens/Beneficiary';
+import { Colors } from '../../assets/colors';
 
 const renderScene = SceneMap({
   first: Clientdetails,
@@ -28,12 +29,50 @@ const ClientInfo = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'First'},
-    {key: 'second', title: 'Second'},
-    {key: 'third', title: 'Third'},
-    {key: 'fourth', title: 'Fourth'},
-    {key: 'fifth', title: 'Fifth'},
+    {key: 'first', title: 'Client details'},
+    {key: 'second', title: 'Policy details'},
+    {key: 'third', title: 'Events'},
+    {key: 'fourth', title: 'Transaction'},
+    {key: 'fifth', title: 'Beneficiary'},
   ]);
+
+
+
+
+  const CustomTabBar = (props) => {
+    return (
+      <View style={styles.tabBar}>
+        {props.navigationState.routes.map((route, i) => {
+          return (
+            <TouchableOpacity
+              style={styles.tabItem}
+              onPress={() => props.jumpTo(route.key)}
+              key={route.key}
+            >
+              <Text style={styles.tabTitle}>
+                {route.title}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  };
+
+
+  const renderTabBar = props => (
+    <TabBar
+      {...props}
+      indicatorStyle={styles.indicatorStyle}
+      style={styles.tabBar}
+      labelStyle={styles.label}
+      scrollEnabled={true}
+      tabStyle={styles.tab} // Add this line
+
+      // Add more customization here
+    />
+  );
+
 
   return (
     <View style={styles.maincontainer}>
@@ -63,7 +102,20 @@ const ClientInfo = () => {
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{width: layout.width}}
-        style={{marginTop: 10}}
+        style={{
+          marginTop: 10,
+        }}
+        // renderTabBar={
+        //   ({ route, focused, color }) => (
+        //     <Text style={{ color, margin: 8 }}>
+        //       HAHA
+        //     </Text>
+        //   )
+        // }
+        // renderTabBar={(props) => <CustomTabBar {...props} />}
+        renderTabBar={renderTabBar}
+
+
       />
     </View>
   );
@@ -72,13 +124,14 @@ const ClientInfo = () => {
 const styles = StyleSheet.create({
   maincontainer: {
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: Colors.white,
   },
   topCtn: {
-    backgroundColor: 'green',
+    backgroundColor: Colors.white,
     display: 'flex',
     flexDirection: 'row',
     width: windowWidth,
+    marginTop: responsiveHeight(1),
   },
   logoImgContainer: {
     backgroundColor: 'white',
@@ -110,7 +163,7 @@ const styles = StyleSheet.create({
     transform: [{scale: 1.5}],
   },
   detailCtn: {
-    backgroundColor: 'blue',
+    backgroundColor: Colors.white,
     width: responsiveWidth(50),
     padding: responsiveWidth(0.5),
     marginLeft: responsiveWidth(2),
@@ -120,6 +173,35 @@ const styles = StyleSheet.create({
     fontFamily: 'Rubik-Regular',
     color: 'black',
   },
+
+  tabBar: {
+    flexDirection: 'row',
+    backgroundColor:Colors.white,
+
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 16,
+  },
+  tabTitle: {
+    // Styling for tab titles
+  },
+  label: {
+    fontSize: responsiveFontSize(1), // Set the font size for the tab titles
+    // Other label styles (e.g., color, fontWeight)
+    fontFamily: 'Rubik-Regular',
+    color: Colors.activeprimary,
+  },
+  tab: {
+    width: responsiveWidth(28), // Set the width for each tab
+    // Other tab styles (e.g., padding, margin)
+  },
+  indicatorStyle:{
+    backgroundColor:Colors.activeprimary,
+    width: responsiveWidth(28), // Set the width for each tab
+
+  }
 });
 
 export default ClientInfo;

@@ -47,7 +47,6 @@ const InputBoxstyles = StyleSheet.create({
   textInput: {
     marginTop: responsiveHeight(1),
     width: responsiveWidth(80),
-    marginLeft: responsiveWidth(8),
     borderBottomColor: 'white',
     padding: 0,
     margin: 0,

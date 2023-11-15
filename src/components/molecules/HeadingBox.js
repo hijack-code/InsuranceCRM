@@ -15,13 +15,13 @@ import {
 import InputBox from '../common/InputBox';
 
 const HeadingBox = (
-  {props, headingText, inputplaceholder = 'box placeholder' ,  onInputChange = (text) => {
+  {props, headingText, inputplaceholder = 'box placeholder' ,containerstyle,  onInputChange = (text) => {
     console.log('Default On box texthandler  ' + text);
   }},
- 
+
 ) => {
   return (
-    <View>
+    <View style= {containerstyle}>
       <Text style={HeadingBoxstyles.headingText}>{headingText}</Text>
 
       <InputBox
@@ -33,13 +33,13 @@ const HeadingBox = (
 };
 
 const HeadingBoxstyles = StyleSheet.create({
+
   headingText: {
     fontSize: responsiveFontSize(1.8),
     fontFamily: 'Rubik-Light',
     color: '#333333',
     backgroundColor: 'white',
     width: responsiveWidth(82),
-    marginLeft: responsiveWidth(8),
     marginTop: responsiveHeight(3.7),
   },
 });
