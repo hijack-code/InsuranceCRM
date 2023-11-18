@@ -20,6 +20,7 @@ import {
 import Button from '../../components/common/Button';
 import ButtonIcon from '../../components/common/ButtonIcon';
 import InputBox from '../../components/common/InputBox';
+import { responsiveWidth } from 'react-native-responsive-dimensions';
 
 const OnboardingScreen = (props,{navigation}) => {
 
@@ -63,9 +64,11 @@ const OnboardingScreen = (props,{navigation}) => {
  
 
 
-
-
+        <View style={{marginLeft:responsiveWidth(8)}}>
         <InputBox inputplaceholder={"Enter email ID"} onChangeText={emailTextHandler}/>
+
+        </View>
+
 
 
 

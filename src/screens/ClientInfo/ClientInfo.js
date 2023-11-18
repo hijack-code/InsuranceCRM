@@ -16,17 +16,43 @@ import Transaction from './Tabscreens/Transaction';
 import Beneficiary from './Tabscreens/Beneficiary';
 import { Colors } from '../../assets/colors';
 
-const renderScene = SceneMap({
-  first: Clientdetails,
-  second: Policydetails,
-  third: Events,
-  fourth: Transaction,
-  fifth: Beneficiary,
-});
 
-const ClientInfo = () => {
+
+const ClientInfo = (props) => {
   const layout = useWindowDimensions();
 
+  const { clientdata } = props.route.params;
+
+
+  console.log(props ,"PROPSS")
+
+  console.log(clientdata ,"clients dataa  PROPSS")
+
+
+  // const renderScene = SceneMap({
+  //   first: Clientdetails,
+  //   second: Policydetails,
+  //   third: Events,
+  //   fourth: Transaction,
+  //   fifth: Beneficiary,
+  // });
+
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'first':
+        return <Clientdetails clientdata={clientdata} />;
+      case 'second':
+        return <Policydetails clientdata={clientdata} />;
+      case 'third':
+        return <Events clientdata={clientdata} />;
+      case 'fourth':
+        return <Transaction clientdata={clientdata} />;
+      case 'fifth':
+        return <Beneficiary clientdata={clientdata} />;
+      default:
+        return null;
+    }
+  };
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'Client details'},

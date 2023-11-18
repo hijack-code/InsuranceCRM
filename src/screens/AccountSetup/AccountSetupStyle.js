@@ -26,7 +26,7 @@ AccountSetupStyle = StyleSheet.create({
           },
           headingCtn:{
             backgroundColor: 'white',
-            marginTop:responsiveHeight(5)
+            marginTop:responsiveHeight(5),
           },
           buttonCtn:{
             marginLeft:responsiveWidth(8),
@@ -45,6 +45,9 @@ AccountSetupStyle = StyleSheet.create({
 
             backgroundColor: 'white',
             marginBottom:responsiveHeight(2)
+          },
+          fieldCtn:{
+            marginLeft:responsiveWidth(8)
           }
     })
 

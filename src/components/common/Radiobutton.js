@@ -72,6 +72,7 @@ const Radiobutton = ({
               borderColor: Colors.activeprimary,
               alignItems: 'center',
               justifyContent: 'center',
+              marginLeft:responsiveWidth(4)
             }}>
             {active == false ? (
               <View
@@ -96,13 +97,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    backgroundColor: 'pink',
+    backgroundColor: 'white',
   },
   radiobtnCtn: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'turquoise',
+    backgroundColor: 'white',
     width: windowWidth,
   },
 
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: responsiveFontSize(1.5),
     fontFamily: 'Rubik-Regular',
+    marginLeft:responsiveWidth(1.5)
   },
 });
 

@@ -24,7 +24,9 @@ const ListView = ({
 
     const renderItem = ({ item }) => (
       <TouchableOpacity onPress={() => {
-       props.props.navigation.navigate('ClientInfo')
+      //  props.props.navigation.navigate('ClientInfo')
+       props.props.navigation.navigate('ClientInfo', { clientdata: item });
+
 
       }} style={styles.item}>
           <View style={styles.profileButton}>
@@ -34,8 +36,8 @@ const ListView = ({
                 source={require('../../assets/images/profileimage.jpg')} /> 
             </View>
             <View style={styles.detailCtn}>
-              <Text style={styles.nametext}>{item.title}</Text>
-              <Text style={styles.nametext}>{item.phone}</Text>
+              <Text style={styles.nametext}>{item?.clientname}</Text>
+              <Text style={styles.nametext}>{item?.clientphone}</Text>
             </View>
       </TouchableOpacity>
     );
@@ -47,7 +49,7 @@ const ListView = ({
   <FlatList
       data={data}
       renderItem={renderItem}
-      keyExtractor={item => item.id}
+      keyExtractor={(item,index) => index}
     />
   );
 };

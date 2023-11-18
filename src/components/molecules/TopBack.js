@@ -48,7 +48,7 @@ const TopBack = ({props}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
     width: windowWidth,
   },
   topCtn: {

@@ -60,7 +60,7 @@ const Buttonstyles = StyleSheet.create({
     backgroundColor: '#eaeaea',
   },
   btnctn:{
-    backgroundColor:"pink",
+    backgroundColor:"white",
     display:"flex",
     flexDirection:"row",
     justifyContent:"space-between"

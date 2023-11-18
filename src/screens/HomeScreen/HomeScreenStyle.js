@@ -23,34 +23,36 @@ HomeScreenStyle = StyleSheet.create({
         container: {
             flex:1,
             backgroundColor: '#f5f5f5',
-            backgroundColor:"pink"
       
           },
-          logoImgContainer:{
+          logoImgContainer: {
             backgroundColor: 'white',
-            marginLeft:responsiveWidth(4),
-
+            borderRadius: responsiveWidth(5),
+            marginLeft: responsiveWidth(1),
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: responsiveHeight(6),
+            width: responsiveWidth(10),
+            elevation: 2,
           },
-          logoImg:{
-            height:responsiveHeight(9),
-            width:responsiveHeight(9),
+          logoImg: {
+            height: responsiveHeight(7),
+            width: responsiveWidth(5),
           },
           nameCtn:{
             backgroundColor:"white",
             display:"flex",
             flexDirection:"row",
             alignItems:"center",
-            justifyContent:"space-between",
             marginTop:responsiveHeight(1)
           },
           nameText:{
-            fontSize:responsiveFontSize(2.4),
-            fontFamily:'Rubik-Medium',
-            lineHeight:responsiveFontSize(3.4),
+            fontSize:responsiveFontSize(2),
+            fontFamily:'Rubik-SemiBold',
             color:"black",
             backgroundColor:"white",
             width:responsiveWidth(70),
-            marginLeft:responsiveWidth(1),
+            marginLeft:responsiveWidth(4)
 
 
           },
@@ -82,19 +84,19 @@ HomeScreenStyle = StyleSheet.create({
             alignItems:'center'
           },
           titleText:{
-            fontSize:responsiveFontSize(2),
+            fontSize:responsiveFontSize(1.8),
             fontFamily:'Rubik-Regular',
             lineHeight:responsiveFontSize(3.4),
             color:"black",
           },
           addClientText:{
-            fontSize:responsiveFontSize(2),
+            fontSize:responsiveFontSize(1.8),
             fontFamily:'Rubik-Regular',
             lineHeight:responsiveFontSize(3.4),
             color:"#007FFF",
           },
           searchSection: {
-            marginTop:responsiveHeight(4),
+            marginTop:responsiveHeight(1),
             borderRadius:responsiveWidth(2.5),
             flexDirection: 'row',
             justifyContent: 'center',
@@ -123,8 +125,23 @@ HomeScreenStyle = StyleSheet.create({
           
           backgroundColor:"white",
           marginTop:responsiveHeight(1),
-          height:responsiveHeight(40)
-        }
+          height:responsiveHeight(51)
+        },
+        profileButton: {
+          overflow: 'hidden',
+          alignItems: 'center',
+          position: 'relative',
+          backgroundColor: 'white',
+          height: responsiveHeight(6),
+          width: responsiveHeight(6),
+          borderRadius: responsiveHeight(6),
+          marginLeft: responsiveWidth(2),
+          elevation: 10,
+        },
+        image: {
+          flex: 1,
+          transform: [{scale: 1.5}],
+        },
 
        
  

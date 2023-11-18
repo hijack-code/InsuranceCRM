@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet, ScrollView,TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
 import {Colors} from '../../../assets/colors';
 import {EmptyDocSvg} from '../../../assets/svgs/SvgImages';
 import {
@@ -12,12 +19,22 @@ import {windowHeight} from '../../../utils/Dimensions';
 import HeadingBox from '../../../components/molecules/HeadingBox';
 import Radiobutton from '../../../components/common/Radiobutton';
 import SaveCancelBtn from '../../../components/common/SavecancelBtn';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Policydetails = props => {
+const Policydetails = (props) => {
+  console.log(props.clientdata, 'CLIENT ALL got id policy derail page');
+
+  const showToast = text => {
+    ToastAndroid.show(text, ToastAndroid.SHORT);
+  };
+
   const [addpolicy, setaddPolicy] = useState(false);
 
   const [statusactive, setStatusactive] = useState(false);
   const [premiumYearly, serPremiumyearly] = useState(false);
+  const [clientData, setClientData] = useState(
+    props.clientdata?.clientpolicies,
+  );
 
   const [policydetails, setPolicydetails] = useState([]);
 
@@ -31,11 +48,47 @@ const Policydetails = props => {
   });
 
   const addPolicyData = () => {
-    setPolicydetails(prevDetails => [...prevDetails, policydata]);
+    setClientData(prevDetails => [...prevDetails, policydata]);
 
-    console.log('AFTER SAVING DATA', policydata);
+    console.log('AFTER SAVING DATA', clientData);
 
-    console.log('policy details arra', policydetails);
+    updateClientPolicies();
+  };
+
+  const updateClientPolicies = async () => {
+    try {
+      // Retrieve the existing clients array from AsyncStorage
+      const existingClientsJson = await AsyncStorage.getItem('@clients_array');
+      let clientsArray = existingClientsJson
+        ? JSON.parse(existingClientsJson)
+        : [];
+      console.log('CLIENTS ARRAY', clientsArray);
+
+      // Find the index of the client to be updated
+      const clientIndex = clientsArray.findIndex(
+        client => client.clientname === props.clientdata.clientname,
+      );
+
+      if (clientIndex !== -1) {
+        console.log(clientIndex, 'INDEX FOUND!');
+        // Update the clientpolicies array for the specific client
+        clientsArray[clientIndex].clientpolicies = [
+          ...clientsArray[clientIndex].clientpolicies,
+          policydata,
+        ];
+
+        console.log(clientsArray, 'CLIENTS ARRAY AFTER INSERTING NET POLICY!');
+        // Save the updated array back to AsyncStorage
+        const updatedClientsJson = JSON.stringify(clientsArray);
+        await AsyncStorage.setItem('@clients_array', updatedClientsJson);
+
+        showToast('Policy added successfully!');
+      } else {
+        console.log('Client not found');
+      }
+    } catch (e) {
+      console.error('Error updating client policies', e);
+    }
   };
 
   const updatePolicyData = (key, value) => {
@@ -153,14 +206,18 @@ const Policydetails = props => {
                 addPolicyData();
               }}
               buttonctn={styles.savebuttonCtn}
+              onCancel={() => {
+                showToast('Cancelled!!');
+                setaddPolicy(false)
+              }}
             />
           </View>
         </View>
-      ) : policydetails.length > 0 ? (
+      ) : clientData.length > 0 ? (
         <View style={styles.policymainctn}>
           <View style={{flex: 1}}>
-            <ScrollView showsVerticalScrollIndicator ={false}>
-              {policydetails.map((item, index) => {
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {clientData.map((item, index) => {
                 console.log(item, 'ITEM', index, 'INDEX');
 
                 return (
@@ -187,8 +244,11 @@ const Policydetails = props => {
                         <Text style={styles.listheadtext}>Next due date</Text>
                         <Text style={styles.statustext}>{item.nextdate}</Text>
 
-                        <TouchableOpacity><Text style ={styles.sendTxt}>Send policy discription</Text></TouchableOpacity>
-
+                        <TouchableOpacity>
+                          <Text style={styles.sendTxt}>
+                            Send policy discription
+                          </Text>
+                        </TouchableOpacity>
                       </View>
 
                       <View style={styles.ctn2}>
@@ -208,14 +268,13 @@ const Policydetails = props => {
                         <Text style={styles.listheadtext}>Maturity Date</Text>
                         <Text style={styles.listvaltext}>{item.indate}</Text>
 
-                        <TouchableOpacity><Text  style ={styles.sendTxt}>Edit details</Text></TouchableOpacity>
-
+                        <TouchableOpacity>
+                          <Text style={styles.sendTxt}>Edit details</Text>
+                        </TouchableOpacity>
                       </View>
 
                       {/* Add more items as needed */}
                     </View>
-
-                   
                   </View>
                 );
               })}
@@ -268,7 +327,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     height: responsiveHeight(82),
-    backgroundColor: 'steelblue',
+    backgroundColor: 'white',
   },
   emptytext: {
     textAlign: 'center',
@@ -347,20 +406,20 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(1.4),
     fontFamily: 'Rubik-Regular',
   },
-  sendCtn:{
-    backgroundColor:"green",
-    display:"flex",
-    flexDirection:"row",
-    justifyContent:"space-between"
+  sendCtn: {
+    backgroundColor: 'green',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  sendTxt:{
+  sendTxt: {
     color: Colors.activeprimary,
     fontSize: responsiveFontSize(1.2),
     fontFamily: 'Rubik-Regular',
-    borderBottomWidth:1,
-    borderColor:Colors.activeprimary,
-    marginTop:responsiveHeight(3),
-  }
+    borderBottomWidth: 1,
+    borderColor: Colors.activeprimary,
+    marginTop: responsiveHeight(3),
+  },
 });
 
 export default Policydetails;
