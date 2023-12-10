@@ -12,6 +12,7 @@ const AppNav = () => {
 
     const {isLoading,userToken}  = useContext(AuthContext);
 
+    console.log("  running appnav js!");
 
 
     if(isLoading ){

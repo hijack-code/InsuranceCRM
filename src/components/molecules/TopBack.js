@@ -31,7 +31,7 @@ const TopBack = ({props}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.topCtn}>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {  props.navigation.goBack()}}>
         <LogoViewer
           Logosource={BackSvg}
           containerstyle={styles.logoImgContainer}
@@ -67,11 +67,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: responsiveHeight(6),
     width: responsiveWidth(10),
-    elevation: 2,
   },
   logoImg: {
-    height: responsiveHeight(7),
-    width: responsiveWidth(5),
+    height: responsiveHeight(8),
+    width: responsiveWidth(6),
   },
   profileButton: {
     overflow: 'hidden',
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
     transform: [{scale: 1.5}],
   },
   headText:{
-    fontSize:responsiveFontSize(1.4),
+    fontSize:responsiveFontSize(2.2),
     fontFamily:'Rubik-Regular',
     color:"black",
     width:responsiveWidth(82),

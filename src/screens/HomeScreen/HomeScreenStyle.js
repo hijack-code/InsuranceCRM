@@ -22,8 +22,15 @@ HomeScreenStyle = StyleSheet.create({
 
         container: {
             flex:1,
-            backgroundColor: '#f5f5f5',
-      
+            backgroundColor:"white",
+            alignItems:"center"
+          },
+          subcontainer:{
+            backgroundColor:"white",
+            width:responsiveWidth(92),
+            height:responsiveHeight(100)
+
+
           },
           logoImgContainer: {
             backgroundColor: 'white',
@@ -40,17 +47,15 @@ HomeScreenStyle = StyleSheet.create({
             width: responsiveWidth(5),
           },
           nameCtn:{
-            backgroundColor:"white",
             display:"flex",
             flexDirection:"row",
             alignItems:"center",
-            marginTop:responsiveHeight(1)
+            marginTop:responsiveHeight(2)
           },
           nameText:{
-            fontSize:responsiveFontSize(2),
-            fontFamily:'Rubik-SemiBold',
+            fontSize:responsiveFontSize(2.2),
+            fontFamily:'Rubik-Medium',
             color:"black",
-            backgroundColor:"white",
             width:responsiveWidth(70),
             marginLeft:responsiveWidth(4)
 
@@ -59,7 +64,6 @@ HomeScreenStyle = StyleSheet.create({
           counterCtn:{
             display:"flex",
             flexDirection:"row",
-            width:windowWidth
           },
           counterlight:{
             backgroundColor:"#dcdcdc",
@@ -84,13 +88,13 @@ HomeScreenStyle = StyleSheet.create({
             alignItems:'center'
           },
           titleText:{
-            fontSize:responsiveFontSize(1.8),
+            fontSize:responsiveFontSize(2),
             fontFamily:'Rubik-Regular',
             lineHeight:responsiveFontSize(3.4),
             color:"black",
           },
           addClientText:{
-            fontSize:responsiveFontSize(1.8),
+            fontSize:responsiveFontSize(2),
             fontFamily:'Rubik-Regular',
             lineHeight:responsiveFontSize(3.4),
             color:"#007FFF",
@@ -104,7 +108,6 @@ HomeScreenStyle = StyleSheet.create({
             backgroundColor: '#fff',
             elevation:2,
             paddingRight: responsiveHeight(1),
-
 
         },
         searchIcon: {
@@ -125,7 +128,7 @@ HomeScreenStyle = StyleSheet.create({
           
           backgroundColor:"white",
           marginTop:responsiveHeight(1),
-          height:responsiveHeight(51)
+          height:responsiveHeight(60)
         },
         profileButton: {
           overflow: 'hidden',
@@ -135,7 +138,6 @@ HomeScreenStyle = StyleSheet.create({
           height: responsiveHeight(6),
           width: responsiveHeight(6),
           borderRadius: responsiveHeight(6),
-          marginLeft: responsiveWidth(2),
           elevation: 10,
         },
         image: {

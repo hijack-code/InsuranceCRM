@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -6,9 +6,11 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  Image
+  Image,
+  ToastAndroid
 } from 'react-native';
-
+import { NavigationContainer, DrawerActions } from '@react-navigation/native';
+import { axiosrequest } from '../../assets/utils/handler';
 import HomeScreenStyle from './HomeScreenStyle';
 import Button from '../../components/common/Button';
 
@@ -19,57 +21,28 @@ import SearchIcon from '../../assets/svgs/searchicon.svg';
 
 import {COLORS} from '../../assets/colors.js';
 
-import {windowWidth} from '../../utils/Dimensions';
+import {windowWidth} from '../../assets/utils/Dimensions';
 import ListView from '../../components/molecules/ListView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
-
-
 const HomeScreen = props => {
-
-
   const [userInfo, setUserInfo] = useState(null);
-  const[clientlist , setClientlist] = useState([]);
-
-
-
+  const [clientlist, setClientlist] = useState([]);
 
   console.log(props, 'PROPSS');
-
-  // const data = [
-  //   {id: '1', title: 'Gaurav kumar yadav', phone: 9123141113},
-  //   {id: '2', title: 'Guarav', phone: 928727232},
-  //   {id: '3', title: 'Shivam', phone: 992829829},
-  //   {id: '4', title: 'abcd', phone: 923773722},
-  //   {id: '5', title: 'Apple', phone: 92782922},
-  //   {id: '6', title: 'Watermelon', phone: 92776332},
-  //   {id: '7', title: 'Pineapple', phone: 927662772},
-  //   {id: '8', title: 'abcd', phone: 97872882},
-  //   {id: '9', title: 'Apple', phone: 728376773},
-  //   {id: '10', title: 'Watermelon', phone: 762879422},
-  //   {id: '11', title: 'Pineapple', phone: 827980308},
-
-  //   // ... more items
-  // ];
-
 
   useEffect(() => {
     const loadUserInfo = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem('userinfo');
-        const existingList = await AsyncStorage.getItem('@clients_array');
+
+        console.log(jsonValue, 'USERINFO in homescreen');
 
         if (jsonValue != null) {
           setUserInfo(JSON.parse(jsonValue));
         }
 
-        if(existingList != null){
-          setClientlist(JSON.parse(existingList));
-        }
-
-
+     
       } catch (e) {
         // error reading value
         console.error(e);
@@ -77,26 +50,66 @@ const HomeScreen = props => {
     };
 
     loadUserInfo();
-  }, []);
+
+    getclients()
+  }, [getclients]);
+
+
+  const showToast = message => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  };
+
+
+
+  const getclients= async () => {
+
+    console.log("fetchig OF CLIENT!!");
+
+    try {
+      // Block of code to try
+      let endpoint = `/client`;
+      const res = await axiosrequest('get',{}, endpoint);
+
+      console.log('Response got in fetcings clints--> ', res.data);
+
+      if (res != '' && res.status == 200) {
+        // props.navigation.navigate('OtpVerify', { email: email });
+        setClientlist(res?.data?.data);
+
+      } else {
+      }
+    } catch (err) {
+      // Block of code to handle errors
+      showToast("Some error occured");
+      console.log(err, 'catch block of api');
+    }
+
+
+  }
 
   return (
     <SafeAreaView style={HomeScreenStyle.container}>
       {/* <ScrollView automaticallyAdjustKeyboardInsets={true}> */}
 
-      <View style={HomeScreenStyle.container}>
+      <View style={HomeScreenStyle.subcontainer}>
         <View style={HomeScreenStyle.nameCtn}>
-     
-            <View style={HomeScreenStyle.profileButton}>
-              <Image
-                style={HomeScreenStyle.image}
-                resizeMode="contain"
-                source={require('../../assets/images/profileimage.jpg')}
-              />
-            </View>
+          <TouchableOpacity
+            onPress={() => {
+              // props.props.navigation.dispatch(DrawerActions.openDrawer());
+              props.props.navigation.openDrawer();
 
-          <Text style={HomeScreenStyle.nameText}>
-            {userInfo?.name}
-          </Text>
+
+
+            }}
+            style={HomeScreenStyle.profileButton}>
+            <Image
+              style={HomeScreenStyle.image}
+              resizeMode="contain"
+              source={require('../../assets/images/profileimage.jpg')}
+            />
+          </TouchableOpacity>
+
+          <Text style={HomeScreenStyle.nameText}>{userInfo?.agency_name}</Text>
         </View>
 
         <View style={HomeScreenStyle.counterCtn}>
@@ -132,7 +145,6 @@ const HomeScreen = props => {
 
           <View style={HomeScreenStyle.searchSection}>
             <TextInput
-              
               style={HomeScreenStyle.searchInput}
               placeholder="Search client"
               placeholderTextColor="#d3d3d3"

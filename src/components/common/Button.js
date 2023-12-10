@@ -29,7 +29,7 @@ const Button = ({disabled = true, onclick=  () => {console.log("checking  defaul
   );
 };
 
-  
+
 
 
 const Buttonstyles = StyleSheet.create({
@@ -43,7 +43,7 @@ const Buttonstyles = StyleSheet.create({
       borderRadius: 6,
       color: 'white',
       textAlign: 'center',
-      fontSize: responsiveFontSize(1.5),
+      fontSize: responsiveFontSize(2),
       fontFamily:'Rubik-Regular',
     },
     buttonstyle:{

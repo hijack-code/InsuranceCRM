@@ -50,13 +50,13 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   textTitle:{
-    fontSize: responsiveFontSize(1.4),
+    fontSize: responsiveFontSize(2),
     fontFamily: 'Rubik-Light',
-    color: '#a9a9a9',
+    color: 'black',
     marginTop:responsiveHeight(2)
   },
   textValue:{
-    fontSize: responsiveFontSize(1.6),
+    fontSize: responsiveFontSize(1.8),
     fontFamily: 'Rubik-Regular',
     color: 'black',
   }

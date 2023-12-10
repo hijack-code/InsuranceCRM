@@ -18,6 +18,8 @@ import HomeActive from '../../assets/images/tabbar/homeActive.svg';
 import PortFolioActive from '../../assets/images/tabbar/portfolioActive.svg';
 import WatchlistActive from '../../assets/images/tabbar/watchlistActive.svg';
 import BellActive from '../../assets/images/tabbar/bellActive.svg';
+import Notification from '../../components/molecules/Notification';
+import PolicyCenter from '../PolicyCenter/PolicyCenter';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -83,7 +85,7 @@ const DashBoard = props => {
 
       <Tab.Screen
         name="HomeScreen"
-        children={() => <HomeScreen props={props} />}
+        children={() => <PolicyCenter props={props} />}
         options={{
           tabBarIcon: ({focused}) => {
             if (focused) {
@@ -95,8 +97,8 @@ const DashBoard = props => {
         }}
       />
       <Tab.Screen
-        name="PortfolioScren"
-        children={() => <AccountSetup props={props} />}
+        name="Notification"
+        children={() => <Notification props={props} />}
         options={{
           tabBarIcon: ({focused}) => {
             if (focused) {

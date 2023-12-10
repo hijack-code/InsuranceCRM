@@ -23,6 +23,7 @@ const InputBox = ({
   onChangeText = text => {
     console.log('Default On texthandler  ' + text);
   },
+  keyboardtype = 'default'
 }) => {
 
 
@@ -36,6 +37,7 @@ const InputBox = ({
         onChangeText={onChangeText}
         style={InputBoxstyles.textInput}
         placeholder={inputplaceholder}
+        keyboardType= {keyboardtype}
       />
     </View>
 
@@ -45,16 +47,17 @@ const InputBox = ({
 
 const InputBoxstyles = StyleSheet.create({
   textInput: {
-    marginTop: responsiveHeight(1),
+    // marginTop: responsiveHeight(1),
+    height:responsiveHeight(5),
     width: responsiveWidth(80),
     borderBottomColor: 'white',
-    padding: 0,
-    margin: 0,
+    padding:0,
+    margin:0,
     borderBottomWidth: 1,
     marginBottom: responsiveHeight(1),
-    fontSize: responsiveFontSize(1.7),
-    borderBottomWidth: 1,
-    borderBottomColor: '#D6D6D6',
+    fontSize: responsiveFontSize(2),
+    borderBottomWidth: responsiveWidth(0.2),
+    borderBottomColor: "black",
   },
 });
 

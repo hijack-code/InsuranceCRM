@@ -1,21 +1,40 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, ScrollView, View} from 'react-native';
+import {SafeAreaView, ScrollView, View,ToastAndroid} from 'react-native';
 import AccountSetupStyle from './AccountSetupStyle';
 import HeadingDesc from '../../components/molecules/HeadingDesc';
 import HeadingBox from '../../components/molecules/HeadingBox';
 import Button from '../../components/common/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {axiosrequest} from '../../assets/utils/handler';
 const AccountSetup = props => {
+
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
+  const showToast = message => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  };
+ 
 
-  const [userinfo, setUserinfo] = useState({
-    name: '',
-    phone: 0,
-    agencyname: false,
-    email: '',
-  });
+  const [userinfo, setUserinfo] = useState({});
+
+
+  const loadUserInfo = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('userinfo');
+
+      console.log(jsonValue, 'USERINFO in account setup');
+
+      if (jsonValue != null) {
+        setUserinfo(JSON.parse(jsonValue));
+      }
+
+   
+    } catch (e) {
+      // error reading value
+      console.error(e);
+    }
+  };
+
 
   const updateUserdata = (key, value) => {
     setUserinfo(prevState => {
@@ -30,30 +49,25 @@ const AccountSetup = props => {
 
   const onPhoneChange = text => {
     console.log('phone change! in account setup ' + text);
-    updateUserdata('phone', text);
+    updateUserdata('mobile', text);
   };
 
   const onNameChange = text => {
     console.log('name change! in account setup ' + text);
     updateUserdata('name', text);
-
   };
 
   const onAgencyChange = text => {
     console.log('name change! in account setup ' + text);
-    updateUserdata('agencyname', text);
-
+    updateUserdata('agency_name', text);
   };
 
-
-
-  const onDone = async (value) => {
+  const onDone = async value => {
     try {
       const jsonValue = JSON.stringify(userinfo);
       await AsyncStorage.setItem('userinfo', jsonValue);
       console.log('Done and user data saved!! ');
-      props.navigation.navigate('DashBoard');
-
+      updateProfile();
     } catch (e) {
       // saving error
       console.log('error occured!! ');
@@ -61,15 +75,62 @@ const AccountSetup = props => {
     }
   };
 
+  const updateProfile = async () => {
+    console.log('CALLING update profile API');
+    props.navigation.reset({
+      index: 0,
+      routes: [{ name: 'DrawerPage' }],
+    });
+    try {
+      // Block of code to try
+      let endpoint = `/update-profile`;
+      const res = await axiosrequest(
+        'put',
+        {
+          mobile: userinfo.mobile,
+          email: userinfo.email,
+          name: userinfo.name,
+          agency_name: userinfo.agency_name,
+        },
+        endpoint,
+      );
+
+      console.log('Response got in update  profile--> ', res.data);
+
+      if (res != '' && res.status == 200) {
+        console.log("inside success 200 response");
+
+        showToast(res?.data?.message);
 
 
+        props.navigation.reset({
+          index: 0,
+          routes: [{ name: 'DrawerPage' }],
+        });
+      
+      } else {
+        console.log("inside else sccount setup  of 200 response");
+        showToast("Some error occurred");
+
+        // showToast(res?.data?.message);
+      }
+    } catch (err) {
+      // Block of code to handle errors
+      showToast("Some error occurred");
+
+      console.log(err, 'catch block of api');
+    }
+  };
 
   useEffect(() => {
+    console.log(userinfo, 'USEEFFECT UERS INF');
+    loadUserInfo();
 
-      console.log(userinfo , "USEEFFECT UERS INF")
+  }, []);
 
 
-  },[userinfo])
+
+
 
 
   return (
@@ -92,6 +153,7 @@ const AccountSetup = props => {
             inputplaceholder={'Enter phone number'}
             onInputChange={onPhoneChange}
             containerstyle={AccountSetupStyle.fieldCtn}
+            keyboardtype='phone-pad'
           />
 
           <HeadingBox
@@ -107,7 +169,13 @@ const AccountSetup = props => {
       <View style={AccountSetupStyle.view2}>
         <Button
           onclick={onDone}
-          disabled={userinfo.name != '' && userinfo.phone != '' && userinfo.agencyname !='' ? false : true}
+          disabled={
+            userinfo.name != '' &&
+            userinfo.phone != '' &&
+            userinfo.agencyname != ''
+              ? false
+              : true
+          }
           btntext="Done"
           buttonctn={AccountSetupStyle.buttonCtn}
         />

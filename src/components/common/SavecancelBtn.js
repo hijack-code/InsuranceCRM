@@ -68,7 +68,7 @@ const Buttonstyles = StyleSheet.create({
   },
   cancelbtn:{
     backgroundColor:Colors.white,
-    height:responsiveHeight(7),
+    height:responsiveHeight(6.5),
     width:"45%",
     justifyContent:"center",
     alignItems:"center",
@@ -78,7 +78,7 @@ const Buttonstyles = StyleSheet.create({
   },
   savebtn:{
     backgroundColor:Colors.activeprimary,
-    height:responsiveHeight(7),
+    height:responsiveHeight(6.5),
     width:"45%",
     justifyContent:"center",
     alignItems:"center",
@@ -86,7 +86,7 @@ const Buttonstyles = StyleSheet.create({
 
   },
   btnText:{
-    fontSize: responsiveFontSize(1.8),
+    fontSize: responsiveFontSize(2.2),
     fontFamily: 'Rubik-Regular',
     color: Colors.activeprimary,
   }

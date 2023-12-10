@@ -6,7 +6,7 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 import {TabView, SceneMap,TabBar} from 'react-native-tab-view';
-import {windowWidth} from '../../utils/Dimensions';
+import {windowWidth} from '../../assets/utils/Dimensions';
 import {BackSvg} from '../../assets/svgs/SvgImages';
 import LogoViewer from '../../components/common/LogoViewer';
 import Policydetails from './Tabscreens/Policydetails';
@@ -19,6 +19,7 @@ import { Colors } from '../../assets/colors';
 
 
 const ClientInfo = (props) => {
+
   const layout = useWindowDimensions();
 
   const { clientdata } = props.route.params;
@@ -29,13 +30,6 @@ const ClientInfo = (props) => {
   console.log(clientdata ,"clients dataa  PROPSS")
 
 
-  // const renderScene = SceneMap({
-  //   first: Clientdetails,
-  //   second: Policydetails,
-  //   third: Events,
-  //   fourth: Transaction,
-  //   fifth: Beneficiary,
-  // });
 
   const renderScene = ({ route }) => {
     switch (route.key) {
@@ -65,25 +59,6 @@ const ClientInfo = (props) => {
 
 
 
-  const CustomTabBar = (props) => {
-    return (
-      <View style={styles.tabBar}>
-        {props.navigationState.routes.map((route, i) => {
-          return (
-            <TouchableOpacity
-              style={styles.tabItem}
-              onPress={() => props.jumpTo(route.key)}
-              key={route.key}
-            >
-              <Text style={styles.tabTitle}>
-                {route.title}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    );
-  };
 
 
   const renderTabBar = props => (
@@ -94,7 +69,6 @@ const ClientInfo = (props) => {
       labelStyle={styles.label}
       scrollEnabled={true}
       tabStyle={styles.tab} // Add this line
-
       // Add more customization here
     />
   );
@@ -103,12 +77,13 @@ const ClientInfo = (props) => {
   return (
     <View style={styles.maincontainer}>
       <View style={styles.topCtn}>
+        <TouchableOpacity onPress={() => { props.navigation.goBack() }}>
         <LogoViewer
           Logosource={BackSvg}
           containerstyle={styles.logoImgContainer}
           logostyle={styles.logoImg}
         />
-
+        </TouchableOpacity>
         <View style={styles.item}>
           <View style={styles.profileButton}>
             <Image
@@ -131,21 +106,14 @@ const ClientInfo = (props) => {
         style={{
           marginTop: 10,
         }}
-        // renderTabBar={
-        //   ({ route, focused, color }) => (
-        //     <Text style={{ color, margin: 8 }}>
-        //       HAHA
-        //     </Text>
-        //   )
-        // }
-        // renderTabBar={(props) => <CustomTabBar {...props} />}
         renderTabBar={renderTabBar}
-
-
       />
     </View>
   );
 };
+
+
+
 
 const styles = StyleSheet.create({
   maincontainer: {
@@ -157,7 +125,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     width: windowWidth,
-    marginTop: responsiveHeight(1),
+    marginTop: responsiveHeight(2),
   },
   logoImgContainer: {
     backgroundColor: 'white',
@@ -167,7 +135,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: responsiveHeight(6),
     width: responsiveWidth(10),
-    elevation: 2,
   },
   logoImg: {
     height: responsiveHeight(7),
@@ -195,7 +162,7 @@ const styles = StyleSheet.create({
     marginLeft: responsiveWidth(2),
   },
   nametext: {
-    fontSize: responsiveFontSize(1.5),
+    fontSize: responsiveFontSize(1.8),
     fontFamily: 'Rubik-Regular',
     color: 'black',
   },
@@ -214,18 +181,18 @@ const styles = StyleSheet.create({
     // Styling for tab titles
   },
   label: {
-    fontSize: responsiveFontSize(1), // Set the font size for the tab titles
+    fontSize: responsiveFontSize(1.6), // Set the font size for the tab titles
     // Other label styles (e.g., color, fontWeight)
     fontFamily: 'Rubik-Regular',
     color: Colors.activeprimary,
   },
   tab: {
-    width: responsiveWidth(28), // Set the width for each tab
+    width: responsiveWidth(34), // Set the width for each tab
     // Other tab styles (e.g., padding, margin)
   },
   indicatorStyle:{
     backgroundColor:Colors.activeprimary,
-    width: responsiveWidth(28), // Set the width for each tab
+    width: responsiveWidth(34), // Set the width for each tab
 
   }
 });

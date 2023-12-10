@@ -31,7 +31,7 @@ const HeadingDesc = ({ props ,mainCtn}) => {
 const HeadingDescstyles = StyleSheet.create({
  
     headingText:{
-        fontSize:responsiveFontSize(2),
+        fontSize:responsiveFontSize(2.4),
         fontFamily:'Rubik-Regular',
         color:"black",
         backgroundColor:"white",
@@ -41,7 +41,7 @@ const HeadingDescstyles = StyleSheet.create({
 
       },
       DescText:{
-        fontSize:responsiveFontSize(1.4),
+        fontSize:responsiveFontSize(1.8),
         fontFamily:'Rubik-Regular',
         color:"black",
         backgroundColor:"white",

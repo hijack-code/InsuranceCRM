@@ -15,6 +15,9 @@ export const AuthProvider =  ({children}) => {
     const [isLoading,setIsloading] = useState(false);
     const [userToken,setUserToken] = useState(null);
 
+    console.log("  running authcontext js!");
+
+
 
     const login = () => {
 
@@ -26,11 +29,14 @@ export const AuthProvider =  ({children}) => {
     }
 
     const logout = () => {
+        console.log("  logingg out!");
+
         setIsloading(true);
         setUserToken(null);
-        AsyncStorage.removeItem('userToken');
+        AsyncStorage.removeItem('userinfo');
         setIsloading(false);
-        
+        console.log("  loggedd out!");
+
     }
     
     const isLoggedIn =  async() => {
@@ -38,10 +44,21 @@ export const AuthProvider =  ({children}) => {
 
             console.log("checking  logingg in!");
             setIsloading(true);
-            let usertoken = await AsyncStorage.getItem('userToken');
-            setUserToken(usertoken);
-            setIsloading(false);
-            console.log("user token got!" +  usertoken);
+            let userinfo = await AsyncStorage.getItem('userinfo');
+            console.log("user info got!" +  userinfo);
+
+            if (userinfo != null) {
+
+                setUserToken(userinfo?.token);
+                setIsloading(false);
+                console.log("user token got!" +  userinfo.token);
+            }else{
+                setIsloading(false);
+
+            }
+            
+
+
 
 
         }

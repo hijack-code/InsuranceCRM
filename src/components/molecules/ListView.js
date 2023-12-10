@@ -20,7 +20,7 @@ const ListView = ({
 
 
 
-    console.log(props , "Data got in component")
+    console.log(data , "Data got in component")
 
     const renderItem = ({ item }) => (
       <TouchableOpacity onPress={() => {
@@ -36,20 +36,21 @@ const ListView = ({
                 source={require('../../assets/images/profileimage.jpg')} /> 
             </View>
             <View style={styles.detailCtn}>
-              <Text style={styles.nametext}>{item?.clientname}</Text>
-              <Text style={styles.nametext}>{item?.clientphone}</Text>
+              <Text style={styles.nametext}>{item?.name}</Text>
+              <Text style={styles.nametext}>{item?.phone}</Text>
             </View>
       </TouchableOpacity>
     );
 
 
   return (
-  
+
 
   <FlatList
       data={data}
       renderItem={renderItem}
       keyExtractor={(item,index) => index}
+      showsVerticalScrollIndicator={false}
     />
   );
 };
@@ -65,13 +66,15 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: 'white',
     marginVertical: responsiveHeight(1),
-    marginHorizontal: responsiveWidth(2),
     display:"flex",
     flexDirection:"row",
     padding:responsiveWidth(1),
-    elevation:6,
+    elevation:2,
     borderRadius:responsiveWidth(1),
-    alignItems:"center"
+    alignItems:"center",
+    marginLeft:responsiveWidth(1),
+    marginRight:responsiveWidth(1)
+    
   },
   title: {
     fontSize: 32,
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
     marginLeft:responsiveWidth(1)
   },
   nametext:{
-    fontSize:responsiveFontSize(1.5),
+    fontSize:responsiveFontSize(1.8),
     fontFamily:'Rubik-Regular',
     color:"black",
   }

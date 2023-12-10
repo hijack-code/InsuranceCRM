@@ -18,7 +18,7 @@ import { GoogleSvg } from '../../assets/svgs/SvgImages';
 
 
 
-const ButtonIcon = ({disabled , Logosource}) => {
+const ButtonIcon = ({disabled , Logosource , title}) => {
 
   return (
 
@@ -30,7 +30,7 @@ const ButtonIcon = ({disabled , Logosource}) => {
               <LogoViewer Logosource={Logosource}  containerstyle={Buttonstyles.logoImgContainer} logostyle={Buttonstyles.logoImg} />
               </View>
               <Text style={Buttonstyles.viewAllBtnTxt}>
-                Sign in with Google
+                {title}
               </Text>
             </View>
           </TouchableOpacity>
@@ -67,9 +67,8 @@ btnGoogle: {
     left: responsiveWidth(1.5),
   },
   viewAllBtnTxt: {
-    // fontSize:16,
     fontSize: responsiveFontSize(2),
-
+    fontFamily: 'Rubik-Regular',
     lineHeight: 20,
     fontWeight: '500',
     textAlign: 'center',

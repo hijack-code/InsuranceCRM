@@ -44,7 +44,7 @@ AccountSetupStyle = StyleSheet.create({
           view2:{
 
             backgroundColor: 'white',
-            marginBottom:responsiveHeight(2)
+            marginBottom:responsiveHeight(8)
           },
           fieldCtn:{
             marginLeft:responsiveWidth(8)

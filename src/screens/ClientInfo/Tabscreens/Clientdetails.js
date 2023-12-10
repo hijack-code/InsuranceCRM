@@ -15,12 +15,12 @@ const Clientdetails = (props) => {
     <View style={styles.container}>
 
       <View style={styles.textCtn}>
-        <TextValue title='Client name'  value={props.clientdata.clientname}/>
-        <TextValue title='Phone number'  value={props.clientdata.clientphone}/>
-        <TextValue title='Email ID'  value={props.clientdata.clientemail}/>
-        <TextValue title='Age'  value={props.clientdata.clientage}/>
-        <TextValue title='Profession'  value={props.clientdata.clientprofession}/>
-        <TextValue title='Address'  value={props.clientdata.clientaddress}/>
+        <TextValue title='Client name'  value={props.clientdata.name}/>
+        <TextValue title='Phone number'  value={props.clientdata.phone}/>
+        <TextValue title='Email ID'  value={props.clientdata.email}/>
+        <TextValue title='Age'  value={props.clientdata.age}/>
+        <TextValue title='Profession'  value={props.clientdata.profession}/>
+        <TextValue title='Address'  value={props.clientdata.address}/>
 
       </View>
     </View>

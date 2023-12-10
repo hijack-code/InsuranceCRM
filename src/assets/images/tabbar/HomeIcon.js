@@ -7,8 +7,8 @@ const HomeIcon = (props) =>{
 
     return(
       <Svg
-      width={27}
-      height={45}
+      width={30}
+      height={50}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

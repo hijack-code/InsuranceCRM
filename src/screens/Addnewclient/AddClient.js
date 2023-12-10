@@ -1,18 +1,34 @@
 import React, {useState} from 'react';
-import {SafeAreaView, ScrollView, View, Text,ToastAndroid} from 'react-native';
-import HeadingDesc from '../../components/molecules/HeadingDesc';
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  ToastAndroid,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import HeadingBox from '../../components/molecules/HeadingBox';
 import Button from '../../components/common/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AddclientStyle from './AddclientStyle';
 import TopBack from '../../components/molecules/TopBack';
 import Radiobutton from '../../components/common/Radiobutton';
+import {Success} from '../../assets/svgs/SvgImages';
+import LogoViewer from '../../components/common/LogoViewer';
+import { Upload } from '../../assets/svgs/SvgImages';
+import { axiosrequest } from '../../assets/utils/handler';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+
 
 const AddClient = props => {
-  console.log(props, 'PROPS IN ADD CLIENT');
 
-  const showToast = () => {
-    ToastAndroid.show('Client added successfully!!', ToastAndroid.SHORT);
+  const showToast = (text) => {
+    ToastAndroid.show(text);
   };
 
   const showToastWithGravity = () => {
@@ -23,26 +39,18 @@ const AddClient = props => {
     );
   };
 
-  const showToastWithGravityAndOffset = () => {
-    ToastAndroid.showWithGravityAndOffset(
-      'A wild toast appeared!',
-      ToastAndroid.LONG,
-      ToastAndroid.BOTTOM,
-      25,
-      50,
-    );
-  };
 
   const [addsingle, setAddsingle] = useState(false);
+  const [successAdd, setSuccessAdd] = useState(false);
 
   const [singleclient, setSingleclient] = useState({
-    clientname: '',
-    clientphone: 0,
-    clientemail: '',
-    clientage: 0,
-    clientprofession: '',
-    clientaddress: '',
-    clientpolicies:[]
+    name: '',
+    phone: 0,
+    email: '',
+    age: 0,
+    profession: '',
+    address: '',
+    clientpolicies: [],
   });
 
   const updateClientdata = (key, value) => {
@@ -54,35 +62,58 @@ const AddClient = props => {
     });
   };
 
-
-  const storeClientData = async (newClient) => {
+  const storeClientData = async newClient => {
     try {
       // Retrieve existing clients from AsyncStorage
       const existingClients = await AsyncStorage.getItem('@clients_array');
       let newClientArray = [];
-  
+
       if (existingClients !== null) {
         // If there are existing clients, parse them and add the new client
         newClientArray = JSON.parse(existingClients);
       }
 
       newClientArray.push(newClient);
-
       // Save the updated array back to AsyncStorage
       const jsonValue = JSON.stringify(newClientArray);
       await AsyncStorage.setItem('@clients_array', jsonValue);
-
-      console.log("SAVING DATA DONE")
-      showToast()
-      props.navigation.goBack();
-
+      console.log('SAVING DATA DONE');
+      addnewclient()
+      // showToast("Client added successfully!!");
     } catch (e) {
       // Saving error
       console.error(e);
     }
   };
 
+  const addnewclient = async () => {
 
+    console.log("ADDITION OF CLIENT!!");
+
+    try {
+      // Block of code to try
+      let endpoint = `/client`;
+      const res = await axiosrequest('post',{"name":singleclient.clientname, "phone":singleclient.clientphone, "email":singleclient.clientemail, "age": parseInt(singleclient.clientage) , "profession":singleclient.clientprofession, "address":singleclient.clientaddress}, endpoint);
+
+      console.log('Response got in add cilient otp--> ', res?.data);
+
+      if (res != '' && res.status == 200) {
+        
+        showToast(res?.data?.message);
+        // props.navigation.navigate('OtpVerify', { email: email });
+      } else {
+        showToast(res?.data?.message);
+
+      }
+    } catch (err) {
+      // Block of code to handle errors
+      showToast("Some error occured");
+
+      console.log(err, 'catch block of api');
+    }
+
+
+  }
 
   const onNameChange = text => {
     console.log('name change! in client setup ' + text);
@@ -114,30 +145,49 @@ const AddClient = props => {
     updateClientdata('clientaddress', text);
   };
 
+
+
+ 
   return (
     <SafeAreaView style={AddclientStyle.container}>
-      <TopBack />
+      <View style={{marginBottom: responsiveHeight(2)}}>
+        <TopBack props={props} />
+      </View>
 
       <ScrollView>
         <View style={AddclientStyle.contentCtn}>
-          <Radiobutton
-            radioheading="Enter new client details"
-            btn1heading="Multiple clients"
-            btn2heading="Single client"
-            active={addsingle}
-            onclickfirst={() => {
-              setAddsingle(true);
-            }}
-            onclicksecond={() => {
-              setAddsingle(false);
-            }}
-          />
+          {!successAdd ? (
+            <>
+              <Radiobutton
+                radioheading="Enter new client details"
+                btn1heading="Multiple clients"
+                btn2heading="Single client"
+                active={addsingle}
+                onclickfirst={() => {
+                  setAddsingle(true);
+                }}
+                onclicksecond={() => {
+                  setAddsingle(false);
+                }}
+              />
+            </>
+          ) : (
+            <></>
+          )}
 
           {addsingle ? (
-            <View>
-              <Text>ADD SINGKE</Text>
+            <View style={{ display:"flex" , justifyContent:"center" , alignItems:"center"}}>
+              <TouchableOpacity>
+              <LogoViewer
+                Logosource={Upload}
+                containerstyle={AddclientStyle.loginImgContainer}
+                logostyle={AddclientStyle.loginImg}
+              />
+
+              </TouchableOpacity>
+           
             </View>
-          ) : (
+          ) : successAdd != true ? (
             <>
               <HeadingBox
                 headingText="Client name"
@@ -150,6 +200,7 @@ const AddClient = props => {
                 inputplaceholder="Enter Phone"
                 props={props}
                 onInputChange={onphoneChange}
+                keyboardtype='phone-pad'
               />
 
               <HeadingBox
@@ -180,17 +231,97 @@ const AddClient = props => {
                 onInputChange={onaddressChange}
               />
             </>
+          ) : (
+            <>
+              <View style={AddclientStyle.profileButton}>
+                <LogoViewer
+                  Logosource={Success}
+                  containerstyle={AddclientStyle.loginImgContainer}
+                  logostyle={AddclientStyle.loginImg}
+                />
+              </View>
+
+              <View>
+                <Text style={AddclientStyle.congratesText}>
+                  Congratulations!
+                </Text>
+                <Text
+                  style={[
+                    AddclientStyle.congratesText,
+                    {
+                      fontSize: responsiveFontSize(2),
+                      marginLeft: responsiveWidth(15),
+                    },
+                  ]}>
+                  Client is added successfully!
+                </Text>
+              </View>
+            </>
           )}
         </View>
       </ScrollView>
 
       <View style={AddclientStyle.view2}>
-        <Button
-          disabled={singleclient.clientname != '' && singleclient.clientphone != '' && singleclient.clientemail !='' && singleclient.clientage != '' && singleclient.clientprofession != '' && singleclient.clientaddress !='' ? false : true}
-          btntext="Save"
-          buttonctn={AddclientStyle.buttonCtn}
-          onclick={() => { storeClientData(singleclient) }}
-        />
+        {successAdd ? (
+          <>
+            <TouchableOpacity
+              onPress={() => {
+                setSuccessAdd(false);
+                setSingleclient({
+                  clientname: '',
+                  clientphone: 0,
+                  clientemail: '',
+                  clientage: 0,
+                  clientprofession: '',
+                  clientaddress: '',
+                  clientpolicies: [],
+                });
+              }}>
+              <Text style={AddclientStyle.sendTxt}>Add new client details</Text>
+            </TouchableOpacity>
+            <Button
+              disabled={false}
+              btntext="Go to Dashboard"
+              buttonctn={AddclientStyle.buttonCtn}
+              onclick={() => {
+                props.navigation.goBack();
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              disabled={
+                singleclient.clientname != '' &&
+                singleclient.clientphone != '' &&
+                singleclient.clientemail != '' &&
+                singleclient.clientage != '' &&
+                singleclient.clientprofession != '' &&
+                singleclient.clientaddress != ''
+                  ? false
+                  : true
+              }
+              btntext="Save"
+              buttonctn={AddclientStyle.buttonCtn}
+              onclick={() => {
+
+
+                setSuccessAdd(true);
+                setSingleclient({
+                  clientname: '',
+                  clientphone: 0,
+                  clientemail: '',
+                  clientage: 0,
+                  clientprofession: '',
+                  clientaddress: '',
+                  clientpolicies: [],
+                });
+
+                storeClientData(singleclient);
+              }}
+            />
+          </>
+        )}
       </View>
     </SafeAreaView>
   );

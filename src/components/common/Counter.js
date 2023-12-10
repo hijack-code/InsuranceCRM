@@ -33,7 +33,7 @@ const Counter = ({
       <View>
         <LogoViewer
           Logosource={WatchSvg}
-          containerstyle={Counterstyles.logoImgContainer}
+          containerstyle={[Counterstyles.logoImgContainer,{backgroundColor:buttonctn.backgroundColor}]}
           logostyle={Counterstyles.logoImg}
         />
       </View>
@@ -63,13 +63,13 @@ const Counterstyles = StyleSheet.create({
   
   },
   clientText: {
-    fontSize: responsiveFontSize(1.6),
+    fontSize: responsiveFontSize(1.7),
     fontFamily: 'Rubik-Regular',
-    lineHeight: responsiveFontSize(3),
     color: 'black',
+    marginTop:responsiveHeight(1)
   },
   clientNumberText: {
-    fontSize: responsiveFontSize(3),
+    fontSize: responsiveFontSize(2.3),
     fontFamily: 'Rubik-Medium',
     color: 'black',
   },

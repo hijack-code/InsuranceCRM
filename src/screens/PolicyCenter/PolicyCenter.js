@@ -21,12 +21,12 @@ import LottieView from 'lottie-react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const fontScale = Dimensions.get('window').fontScale;
-const Beneficiary = () => {
+const PolicyCenter = () => {
   return (
     <SafeAreaView style={styles.container}>
       <LottieView
         style={styles.animationCtn}
-        source={require('../../../assets/animations/comingsoon.json')}
+        source={require('../../assets/animations/comingsoon.json')}
         autoPlay
         loop
       />
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default Beneficiary;
+export default PolicyCenter;

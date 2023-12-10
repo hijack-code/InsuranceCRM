@@ -13,6 +13,7 @@ import AppNav from "./src/navigation/AppNav";
 
 const App = () => {
 
+  console.log("  running app js!");
 
   return (
 

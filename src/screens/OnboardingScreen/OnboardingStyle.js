@@ -50,21 +50,33 @@ OnboardingStyle = StyleSheet.create({
 
           },
           loginText:{
-            fontSize:responsiveFontSize(2.8),
+            fontSize:responsiveFontSize(3),
             fontFamily:'Rubik-Medium',
             lineHeight:responsiveFontSize(3.4),
             color:"#333333",
             backgroundColor:"white",
             width:responsiveWidth(82),
             marginLeft:responsiveWidth(8),
-            marginTop:responsiveHeight(3.79)
+            marginTop:responsiveHeight(3.79),
           },
           buttonCtn:{
             marginLeft:responsiveWidth(8),
             width:responsiveWidth(80),
             marginTop:responsiveHeight(1)
 
-          }
+          },
+          submitButton: {
+            position: 'absolute',
+            bottom:responsiveHeight(5),
+        },
+        headingText: {
+          fontSize: responsiveFontSize(1.8),
+          fontFamily: 'Rubik-Light',
+          color: '#333333',
+          backgroundColor: 'white',
+          width: responsiveWidth(82),
+          marginTop: responsiveHeight(1),
+        },
     })
 
 

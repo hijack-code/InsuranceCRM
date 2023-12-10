@@ -12,7 +12,7 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import {windowWidth} from '../../utils/Dimensions';
+import {windowWidth} from '../../assets/utils/Dimensions';
 import {Colors} from '../../assets/colors';
 
 const Radiobutton = ({
@@ -39,8 +39,8 @@ const Radiobutton = ({
         <TouchableOpacity key={1} onPress={() => { onclickfirst() }}>
           <View
             style={{
-              height: 24,
-              width: 24,
+              height: responsiveHeight(2.5),
+              width: responsiveHeight(2.5),
               borderRadius: 12,
               borderWidth: 2,
               borderColor: Colors.activeprimary,
@@ -50,8 +50,8 @@ const Radiobutton = ({
             {active == true ? (
               <View
                 style={{
-                  height: 12,
-                  width: 12,
+                  height: responsiveHeight(1.2),
+                  width: responsiveHeight(1.2),
                   borderRadius: 6,
                   backgroundColor: Colors.activeprimary,
                 }}
@@ -59,14 +59,16 @@ const Radiobutton = ({
             ) : null}
           </View>
         </TouchableOpacity>
-
+        <TouchableOpacity key={3} onPress={() => { onclickfirst() }}>
         <Text style={styles.radiobtntext}>{btn1heading}</Text>
+        </TouchableOpacity>
+        
 
         <TouchableOpacity key={2} onPress={() => { onclicksecond()}}>
           <View
             style={{
-              height: 24,
-              width: 24,
+              height: responsiveHeight(2.5),
+              width: responsiveHeight(2.5),
               borderRadius: 12,
               borderWidth: 2,
               borderColor: Colors.activeprimary,
@@ -77,8 +79,8 @@ const Radiobutton = ({
             {active == false ? (
               <View
                 style={{
-                  height: 12,
-                  width: 12,
+                  height: responsiveHeight(1.2),
+                  width: responsiveHeight(1.2),
                   borderRadius: 6,
                   backgroundColor: Colors.activeprimary,
                 }}
@@ -86,8 +88,9 @@ const Radiobutton = ({
             ) : null}
           </View>
         </TouchableOpacity>
-
+        <TouchableOpacity key={4} onPress={() => { onclicksecond()}}>
         <Text style={styles.radiobtntext}>{btn2heading}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
   },
   radiobtntext: {
     color: 'black',
-    fontSize: responsiveFontSize(1.5),
+    fontSize: responsiveFontSize(1.8),
     fontFamily: 'Rubik-Regular',
     marginLeft:responsiveWidth(1.5)
   },

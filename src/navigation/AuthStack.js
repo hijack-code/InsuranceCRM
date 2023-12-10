@@ -7,6 +7,8 @@ import AccountSetup from '../screens/AccountSetup/AccountSetup.js';
 import DashBoard from '../screens/Dashboard/Dashboard.js';
 import ClientInfo from '../screens/ClientInfo/ClientInfo.js';
 import AddClient from '../screens/Addnewclient/AddClient.js';
+import OtpVerify from '../screens/Otpverify/OtpVerify.js';
+import DrawerPage from '../screens/DrawerPage/DrawerPage.js';
 
 
 
@@ -15,6 +17,9 @@ import AddClient from '../screens/Addnewclient/AddClient.js';
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
+
+  console.log("  running authstack js!");
+
   return (
     <Stack.Navigator screenOptions={{headerShown: false,animation: 'slide_from_right'}}>
       <Stack.Screen name="Onboarding" component={OnboardingScreen} />
@@ -22,9 +27,13 @@ const AuthStack = () => {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="AccountSetup" component={AccountSetup} />
       <Stack.Screen name="DashBoard" component={DashBoard} />
-
       <Stack.Screen name="ClientInfo" component={ClientInfo} />
       <Stack.Screen name="AddClient" component={AddClient} />
+      <Stack.Screen name="OtpVerify" component={OtpVerify} />
+      <Stack.Screen name="DrawerPage" component={DrawerPage} />
+
+      
+
 
 
     </Stack.Navigator>
