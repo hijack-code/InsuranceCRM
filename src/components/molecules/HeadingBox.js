@@ -39,7 +39,7 @@ const HeadingBox = ({
 
 const HeadingBoxstyles = StyleSheet.create({
   headingText: {
-    fontSize: responsiveFontSize(2),
+    fontSize: responsiveFontSize(1.8),
     fontFamily: 'Rubik-Light',
     color: 'black',
     backgroundColor: 'white',

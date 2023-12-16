@@ -13,6 +13,7 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
+import { Colors } from '../../assets/colors';
 
 
 
@@ -23,7 +24,8 @@ const InputBox = ({
   onChangeText = text => {
     console.log('Default On texthandler  ' + text);
   },
-  keyboardtype = 'default'
+  keyboardtype = 'default',
+  onfocushandler =  () => {}
 }) => {
 
 
@@ -38,6 +40,8 @@ const InputBox = ({
         style={InputBoxstyles.textInput}
         placeholder={inputplaceholder}
         keyboardType= {keyboardtype}
+        placeholderTextColor={Colors.textcolor} 
+        onFocus={onfocushandler}
       />
     </View>
 
@@ -55,9 +59,11 @@ const InputBoxstyles = StyleSheet.create({
     margin:0,
     borderBottomWidth: 1,
     marginBottom: responsiveHeight(1),
-    fontSize: responsiveFontSize(2),
+    fontSize:responsiveFontSize(1.8),
     borderBottomWidth: responsiveWidth(0.2),
-    borderBottomColor: "black",
+    borderBottomColor: Colors.textcolor,
+    color:"black",
+
   },
 });
 

@@ -52,7 +52,7 @@ const Policydetails = props => {
   };
 
   const handleConfirm = date => {
-    console.warn('A date has been picked: ', date);
+    console.log('A date has been picked: ', date);
     console.log(currentDatebox, 'CURRENTDATE');
     const dt = new Date(date);
     const x = dt.toISOString().split('T');
@@ -211,19 +211,21 @@ const Policydetails = props => {
 
     ) {
 
-            console.log(
-        'Data of policy being added',
-        policydata.amount,
-        '--',
-        policydata.name,
-        '---',
-        policydata.inception_date,
-        '---',
-        policydata.next_due_date,
-        '---',
-        policydata.maturity_date,
-      );
+          
       try {
+
+        console.log(
+          'Data of policy being added',
+          policydata.amount,
+          '--',
+          policydata.name,
+          '---',
+          policydata.inception_date,
+          '---',
+          policydata.next_due_date,
+          '---',
+          policydata.maturity_date,
+        );
         // Block of code to try
         let endpoint = `/policy`;
         const res = await axiosrequest(
@@ -236,6 +238,7 @@ const Policydetails = props => {
             frequency: policydata.frequency == true ? 'yearly' : 'monthly',
             next_due_date: policydata.next_due_date,
             client_id: props?.clientdata?.id,
+            maturity_date:policydata.maturity_date
           },
           endpoint,
         );
@@ -256,7 +259,7 @@ const Policydetails = props => {
           });
           getAllpolicy();
         } else {
-          showToast('Fill details first!!');
+          showToast(res?.data?.message);
           // showToast(res?.data?.message);
         }
       } catch (err) {

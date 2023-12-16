@@ -64,6 +64,7 @@ HomeScreenStyle = StyleSheet.create({
           counterCtn:{
             display:"flex",
             flexDirection:"row",
+            marginTop:responsiveHeight(2)
           },
           counterlight:{
             backgroundColor:"#dcdcdc",
@@ -79,7 +80,9 @@ HomeScreenStyle = StyleSheet.create({
           },
 
           listingMainCtn:{
-            margin:responsiveWidth(2.2)
+            margin:responsiveWidth(2.2),
+            marginTop:responsiveHeight(2)
+
           },
           listingTitleCtn:{
             display:"flex",
@@ -94,13 +97,13 @@ HomeScreenStyle = StyleSheet.create({
             color:"black",
           },
           addClientText:{
-            fontSize:responsiveFontSize(2),
+            fontSize:responsiveFontSize(1.6),
             fontFamily:'Rubik-Regular',
             lineHeight:responsiveFontSize(3.4),
             color:"#007FFF",
           },
           searchSection: {
-            marginTop:responsiveHeight(1),
+            marginTop:responsiveHeight(2),
             borderRadius:responsiveWidth(2.5),
             flexDirection: 'row',
             justifyContent: 'center',
@@ -127,8 +130,8 @@ HomeScreenStyle = StyleSheet.create({
         clientlistCtn:{
           
           backgroundColor:"white",
-          marginTop:responsiveHeight(1),
-          height:responsiveHeight(60)
+          marginTop:responsiveHeight(2),
+          height:responsiveHeight(55)
         },
         profileButton: {
           overflow: 'hidden',
@@ -138,7 +141,7 @@ HomeScreenStyle = StyleSheet.create({
           height: responsiveHeight(6),
           width: responsiveHeight(6),
           borderRadius: responsiveHeight(6),
-          elevation: 10,
+          // elevation: 10,
         },
         image: {
           flex: 1,

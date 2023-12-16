@@ -119,6 +119,7 @@ const HomeScreen = props => {
             buttonctn={HomeScreenStyle.counterlight}
             clientstyle={HomeScreenStyle.totalclienttext}
             clientnumberstyle={HomeScreenStyle.totalclienttext}
+            counteractive = {false}
           />
 
           <Counter
@@ -127,6 +128,7 @@ const HomeScreen = props => {
             buttonctn={HomeScreenStyle.counteractive}
             clientstyle={HomeScreenStyle.eventtext}
             clientnumberstyle={HomeScreenStyle.eventtext}
+            counteractive = {true}
           />
         </View>
 

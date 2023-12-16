@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: responsiveFontSize(2),
     fontFamily: 'Rubik-Regular',
+    marginBottom:responsiveHeight(1)
   },
   radiobtntext: {
     color: 'black',

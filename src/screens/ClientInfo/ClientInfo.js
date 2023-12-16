@@ -74,6 +74,49 @@ const ClientInfo = (props) => {
   );
 
 
+  const renderStatus = status => {
+    switch (status) {
+      case 'new_lead':
+        return (
+          <View style={[styles.detailCtnLead,{ backgroundColor:"#3D8BFF"}]}>
+
+          <View style={[styles.leadCtn]}>
+            <Text style={styles.statusText}>NEW LEAD</Text>
+          </View>
+          </View>
+        );
+      case 'active':
+        return (
+          <View style={[styles.detailCtnLead,{ backgroundColor:"#61A60E"}]}>
+
+          <View style={styles.leadCtn}>
+            <Text style={styles.statusText}>ACTIVE</Text>
+          </View>
+          </View>
+        );
+      case 'in_progress':
+        return (
+          <View style={[styles.detailCtnLead,{ backgroundColor:"#FF9900"}]}>
+
+          <View style={styles.leadCtn}>
+            <Text style={styles.statusText}>IN PROGRESS</Text>
+          </View>
+          </View>
+        );
+      case 'cold_lead':
+        return (
+          <View style={[styles.detailCtnLead,{ backgroundColor:"#24B0FF"}]}>
+
+          <View style={styles.leadCtn}>
+            <Text style={styles.statusText}>COLD LEAD</Text>
+          </View>
+          </View>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <View style={styles.maincontainer}>
       <View style={styles.topCtn}>
@@ -84,7 +127,7 @@ const ClientInfo = (props) => {
           logostyle={styles.logoImg}
         />
         </TouchableOpacity>
-        <View style={styles.item}>
+        <View style={[styles.item]}>
           <View style={styles.profileButton}>
             <Image
               style={styles.image}
@@ -92,6 +135,9 @@ const ClientInfo = (props) => {
               source={require('../../assets/images/profileimage.jpg')}
             />
           </View>
+
+          {renderStatus(clientdata.status)}
+
         </View>
         <View style={styles.detailCtn}>
           <Text style={styles.nametext}>Gaurav Yadav</Text>
@@ -194,6 +240,23 @@ const styles = StyleSheet.create({
     backgroundColor:Colors.activeprimary,
     width: responsiveWidth(34), // Set the width for each tab
 
+  },
+  detailCtnLead:{
+    paddingHorizontal: responsiveWidth(2),
+    // position: 'absolute',
+    // right: responsiveWidth(6),
+    // bottom: responsiveHeight(2),
+    borderRadius:responsiveWidth(4),
+    justifyContent:"center",
+    alignItems:"center",
+    marginTop:responsiveHeight(1)
+  },
+  leadCtn:{
+  },
+  statusText:{
+    fontSize: responsiveFontSize(1.2),
+    fontFamily: 'Rubik-Regular',
+    color:"white",
   }
 });
 

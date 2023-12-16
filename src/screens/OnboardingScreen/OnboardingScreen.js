@@ -1,16 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   SafeAreaView,
   View,
   Text,
   TouchableOpacity,
-  TextInput,
   ScrollView,
   ToastAndroid,
+  Dimensions,
 } from 'react-native';
 import OnboardingStyle from './OnboardingStyle';
 
-import LoginImg from '../../assets/images/LoginImg.svg';
 import LogoViewer from '../../components/common/LogoViewer';
 import {axiosrequest} from '../../assets/utils/handler';
 import {
@@ -26,11 +25,14 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import {showToast} from '../../assets/utils/Helpers';
+const {width, height} = Dimensions.get('window');
 
 const OnboardingScreen = (props, {navigation}) => {
   const [email, setEmail] = useState('');
   const [isValid, setValid] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const scrollViewRef = useRef(null);
   const emailTextHandler = text => {
     console.log('EMAIL TEXT HANDLER' + text);
 
@@ -48,38 +50,40 @@ const OnboardingScreen = (props, {navigation}) => {
     }
   };
 
+  const onfocus = () => {
+    console.log('ONFOCUS HANDLER', scrollViewRef);
+    scrollViewRef.current?.scrollTo({y: 500, animated: true});
+  };
+
   function validateEmail(email) {
     const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return regex.test(email);
   }
 
-  const showToast = message => {
-    ToastAndroid.show(message, ToastAndroid.SHORT);
-  };
-
   const callOtp = async () => {
-    props.navigation.navigate('OtpVerify', {email: email});
+    // props.navigation.navigate('OtpVerify', {email: email});
 
     console.log('CALLING OTP API');
+    setLoading(true)
 
     try {
       // Block of code to try
       let endpoint = `/login`;
       const res = await axiosrequest('post', {email: email}, endpoint);
+      setLoading(false)
 
       console.log('Response got in email otp--> ', res);
 
       if (res != '' && res.status == 200) {
-        
         showToast(res?.data?.message);
-        props.navigation.navigate('OtpVerify', { email: email });
+        props.navigation.navigate('OtpVerify', {email: email});
       } else {
-        showToast(res?.data?.message);
-
+        // showToast(res?.data?.message);
+        showToast('Some error occured');
       }
     } catch (err) {
       // Block of code to handle errors
-      showToast("Some error occured");
+      showToast('Some error occured');
 
       console.log(err, 'catch block of api');
     }
@@ -87,7 +91,7 @@ const OnboardingScreen = (props, {navigation}) => {
 
   return (
     <SafeAreaView style={OnboardingStyle.container}>
-      <ScrollView automaticallyAdjustKeyboardInsets={true}>
+      <ScrollView automaticallyAdjustKeyboardInsets={true} ref={scrollViewRef}>
         <LogoViewer
           Logosource={LogoImage}
           containerstyle={OnboardingStyle.logoImgContainer}
@@ -100,12 +104,13 @@ const OnboardingScreen = (props, {navigation}) => {
         />
 
         <Text style={OnboardingStyle.loginText}>Log in</Text>
+        <Text style={OnboardingStyle.emailText}>Email ID</Text>
 
         <View style={{marginLeft: responsiveWidth(8)}}>
-
           <InputBox
             inputplaceholder={'Enter Email ID'}
             onChangeText={emailTextHandler}
+            onfocushandler={onfocus}
           />
         </View>
 
@@ -117,6 +122,7 @@ const OnboardingScreen = (props, {navigation}) => {
             // props.navigation.navigate('AccountSetup');
           }}
           buttonctn={OnboardingStyle.buttonCtn}
+          loading={loading}
         />
 
         <View

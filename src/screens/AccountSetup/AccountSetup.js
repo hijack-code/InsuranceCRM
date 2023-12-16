@@ -6,6 +6,19 @@ import HeadingBox from '../../components/molecules/HeadingBox';
 import Button from '../../components/common/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {axiosrequest} from '../../assets/utils/handler';
+
+import {jwtDecode} from 'jwt-decode';
+
+// import "core-js/stable/atob"; // <- polyfill here
+
+import {decode} from 'base-64';
+global.atob = decode;
+
+
+
+
+
+
 const AccountSetup = props => {
 
   const [phone, setPhone] = useState('');
@@ -99,6 +112,16 @@ const AccountSetup = props => {
 
       if (res != '' && res.status == 200) {
         console.log("inside success 200 response");
+
+        const decoded = jwtDecode(res?.data?.token);
+
+        console.log(decoded, 'DECODED IN UPDATE PROFILE TOKEN');
+        decoded["token"] = res?.data?.token ;
+
+
+        const jsonValue = JSON.stringify(decoded);
+        await AsyncStorage.setItem('userinfo', jsonValue);
+        showToast('Success in updating token!');
 
         showToast(res?.data?.message);
 

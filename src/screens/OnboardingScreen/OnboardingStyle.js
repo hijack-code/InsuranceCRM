@@ -77,6 +77,16 @@ OnboardingStyle = StyleSheet.create({
           width: responsiveWidth(82),
           marginTop: responsiveHeight(1),
         },
+        emailText:{
+          fontSize:responsiveFontSize(1.8),
+          fontFamily:'Rubik-Light',
+          lineHeight:responsiveFontSize(3.4),
+          color:"#333333",
+          backgroundColor:"white",
+          width:responsiveWidth(82),
+          marginLeft:responsiveWidth(8),
+          marginTop:responsiveHeight(3.79),
+        }
     })
 
 

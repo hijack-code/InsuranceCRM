@@ -37,22 +37,14 @@ const OtpVerify = props => {
   // console.log(props, 'OTP VERUFT');
 
   const [otp, setOtp] = useState('');
+  const [otploading, setOtpLoading] = useState(false);
+
 
   const showToast = message => {
     ToastAndroid.show(message, ToastAndroid.SHORT);
   };
 
-  const onDone = async value => {
-    try {
-      const jsonValue = JSON.stringify(userinfo);
-      await AsyncStorage.setItem('userinfo', jsonValue);
-      console.log('Done and user data saved!! ');
-    } catch (e) {
-      // saving error
-      console.log('error occured!! ');
-      console.log(e);
-    }
-  };
+ 
 
   const callOtp = async () => {
     console.log('CALLING OTP verify  API');
@@ -63,23 +55,25 @@ const OtpVerify = props => {
 
     try {
       // Block of code to try
+      setOtpLoading(true)
       let endpoint = `/otp`;
 
-      // const res = await axiosrequest(
-      //   'post',
-      //   {email: props.route.params.email, otp: otp},
-      //   endpoint,
-      // );
+      const res = await axiosrequest(
+        'post',
+        {email: props.route.params.email, otp: otp},
+        endpoint,
+      );
+      setOtpLoading(false)
 
-      //dummy api response
-      res = {
-        data: {
-          success: true,
-          token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZ2VuY3lfbmFtZSI6IkFnZW5jeSIsImVtYWlsIjoiZ2F1cmF2eWFkYXYwMDcyOUBnbWFpbC5jb20iLCJleHAiOjE3MDIzMTMzNDYsImlkIjozLCJtb2JpbGUiOiI3NTI0OTQ0Mzk4IiwibmFtZSI6IkdhdXJhdiJ9.TrtBaDyjHFjCC2HTudS-BHFMVpYroexrm3HL1ja0GhQ',
-        },
-        status: 200,
-      };
+      // //dummy api response
+      // res = {
+      //   data: {
+      //     success: true,
+      //     token:
+      //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZ2VuY3lfbmFtZSI6IkFnZW5jeSIsImVtYWlsIjoiZ2F1cmF2eWFkYXYwMDcyOUBnbWFpbC5jb20iLCJleHAiOjE3MDQ4MTk1OTEsImlkIjozLCJtb2JpbGUiOiI3NTI0OTQ0Mzk4IiwibmFtZSI6IkdhdXJhdiJ9.7hN6EX9mZ4p2yQnrYaJQ3lY7OP8bNNOqhf_UlqJGOqs',
+      //     },
+      //   status: 200,
+      // };
 
       console.log('Response got in email otp--> ', res);
       // token and success  message
@@ -95,6 +89,7 @@ const OtpVerify = props => {
         const jsonValue = JSON.stringify(decoded);
         await AsyncStorage.setItem('userinfo', jsonValue);
         showToast('Success!');
+        console.log(res.data, "RESPONNNNn")
 
 
         if (
@@ -111,7 +106,9 @@ const OtpVerify = props => {
             index: 0,
             routes: [{ name: 'DrawerPage' }],
           });
-          // props.navigation.navigate('DrawerPage');
+          // props.navigation.navigate('AccountSetup', {
+          //   email: props.route.params.email,
+          // });
         } else {
           props.navigation.navigate('AccountSetup', {
             email: props.route.params.email,
@@ -120,7 +117,7 @@ const OtpVerify = props => {
 
     
       } else {
-        showToast('Some error occured');
+        showToast(res?.data?.message);
       }
     } catch (err) {
       // Block of code to handle errors
@@ -153,9 +150,9 @@ const OtpVerify = props => {
           />
 
           <View style={styles.resendCtn}>
-            <Text style={styles.otpText}>Code not received?</Text>
+            <Text style={[styles.otpText,{ width: responsiveWidth(40),}]}>Code not received?</Text>
             <TouchableOpacity>
-              <Text style={[styles.otpText, styles.resendText]}> Resend</Text>
+              <Text style={[styles.otpText, styles.resendText,{ width: responsiveWidth(20),textAlign:"left"}]}> Resend</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -165,7 +162,8 @@ const OtpVerify = props => {
             disabled={otp.length >= 4 ? false : true}
             onclick={callOtp}
             buttonctn={styles.buttonctn}
-            btntext={'Submit otp'}
+            btntext={'Submit OTP'}
+            loading = {otploading}
           />
         </View>
       </View>
@@ -199,12 +197,14 @@ const styles = StyleSheet.create({
   },
   otpText: {
     fontSize: responsiveFontSize(2),
-    fontFamily: 'Rubik-Medium',
+    fontFamily: 'Rubik-Regular',
     lineHeight: responsiveFontSize(3.4),
     color: '#333333',
-    backgroundColor: 'white',
+    backgroundColor: "white",
     marginTop: responsiveHeight(3.79),
     textAlign: 'center',
+    width: responsiveWidth(80),
+
   },
   otpcontainer: {
     width: responsiveWidth(80),

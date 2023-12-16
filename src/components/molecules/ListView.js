@@ -1,109 +1,164 @@
-import React from "react";
-import { FlatList, View, Text, StyleSheet,Dimensions , TouchableOpacity,Image,SafeAreaView } from 'react-native';
+import React from 'react';
+import {
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Image,
+  SafeAreaView,
+} from 'react-native';
 
 import {
   responsiveHeight,
   responsiveWidth,
   responsiveFontSize,
-} from "react-native-responsive-dimensions";
-import { Colors } from "../assets/colors";
+} from 'react-native-responsive-dimensions';
+import {Colors} from '../assets/colors';
 
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-const fontScale = Dimensions.get("window").fontScale;
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const fontScale = Dimensions.get('window').fontScale;
 
-const ListView = ({
-  props,
-  data,
- 
-}) => {
+const ListView = ({props, data}) => {
+  const renderStatus = status => {
+    switch (status) {
+      case 'new_lead':
+        return (
+          <View style={[styles.detailCtnLead,{ backgroundColor:"#3D8BFF"}]}>
 
+          <View style={[styles.leadCtn]}>
+            <Text style={styles.statusText}>NEW LEAD</Text>
+          </View>
+          </View>
+        );
+      case 'active':
+        return (
+          <View style={[styles.detailCtnLead,{ backgroundColor:"#61A60E"}]}>
 
+          <View style={styles.leadCtn}>
+            <Text style={styles.statusText}>ACTIVE</Text>
+          </View>
+          </View>
+        );
+      case 'in_progress':
+        return (
+          <View style={[styles.detailCtnLead,{ backgroundColor:"#FF9900"}]}>
 
-    console.log(data , "Data got in component")
+          <View style={styles.leadCtn}>
+            <Text style={styles.statusText}>IN PROGRESS</Text>
+          </View>
+          </View>
+        );
+      case 'cold_lead':
+        return (
+          <View style={[styles.detailCtnLead,{ backgroundColor:"#24B0FF"}]}>
 
-    const renderItem = ({ item }) => (
-      <TouchableOpacity onPress={() => {
-      //  props.props.navigation.navigate('ClientInfo')
-       props.props.navigation.navigate('ClientInfo', { clientdata: item });
+          <View style={styles.leadCtn}>
+            <Text style={styles.statusText}>COLD LEAD</Text>
+          </View>
+          </View>
+        );
+      default:
+        return null;
+    }
+  };
 
+  console.log(data, 'Data got in component');
 
-      }} style={styles.item}>
-          <View style={styles.profileButton}>
-              <Image
-                style={ styles.image }
-                resizeMode='contain'
-                source={require('../../assets/images/profileimage.jpg')} /> 
-            </View>
-            <View style={styles.detailCtn}>
-              <Text style={styles.nametext}>{item?.name}</Text>
-              <Text style={styles.nametext}>{item?.phone}</Text>
-            </View>
-      </TouchableOpacity>
-    );
-
+  const renderItem = ({item}) => (
+    <TouchableOpacity
+      onPress={() => {
+        //  props.props.navigation.navigate('ClientInfo')
+        props.props.navigation.navigate('ClientInfo', {clientdata: item});
+      }}
+      style={styles.item}>
+      <View style={styles.profileButton}>
+        <Image
+          style={styles.image}
+          resizeMode="contain"
+          source={require('../../assets/images/profileimage.jpg')}
+        />
+      </View>
+      <View style={styles.detailCtn}>
+        <Text style={styles.nametext}>{item?.name}</Text>
+        <Text style={styles.nametext}>{item?.phone}</Text>
+      </View>
+        
+        {renderStatus(item?.status)}
+        
+    </TouchableOpacity>
+  );
 
   return (
-
-
-  <FlatList
+    <FlatList
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item,index) => index}
+      keyExtractor={(item, index) => index}
       showsVerticalScrollIndicator={false}
     />
   );
 };
 
-
-
-
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
-    backgroundColor:"white"
+    backgroundColor: 'white',
   },
   item: {
     backgroundColor: 'white',
     marginVertical: responsiveHeight(1),
-    display:"flex",
-    flexDirection:"row",
-    padding:responsiveWidth(1),
-    elevation:2,
-    borderRadius:responsiveWidth(1),
-    alignItems:"center",
-    marginLeft:responsiveWidth(1),
-    marginRight:responsiveWidth(1)
-    
+    display: 'flex',
+    flexDirection: 'row',
+    padding: responsiveWidth(3.5),
+    elevation: 2,
+    borderRadius: responsiveWidth(1),
+    alignItems: 'center',
+    marginLeft: responsiveWidth(1),
+    marginRight: responsiveWidth(1),
   },
   title: {
     fontSize: 32,
   },
-  profileButton:{
+  profileButton: {
     overflow: 'hidden',
     alignItems: 'center',
     position: 'relative',
-    backgroundColor:"white",
-    height:responsiveHeight(6),
-    width:responsiveHeight(6),
-    borderRadius:responsiveHeight(6),
-    marginLeft:responsiveWidth(2),
-    elevation:10
-
+    backgroundColor: 'white',
+    height: responsiveHeight(6),
+    width: responsiveHeight(6),
+    borderRadius: responsiveHeight(6),
+    marginLeft: responsiveWidth(2),
+    elevation: 10,
   },
   image: {
     flex: 1,
-    transform: [{ scale: 1.5 }]
+    transform: [{scale: 1.5}],
   },
-  detailCtn:{
-    backgroundColor:"white",
-    padding:responsiveWidth(0.5),
-    marginLeft:responsiveWidth(1)
+  detailCtn: {
+    padding: responsiveWidth(0.5),
+    marginLeft: responsiveWidth(3),
   },
-  nametext:{
-    fontSize:responsiveFontSize(1.8),
-    fontFamily:'Rubik-Regular',
-    color:"black",
+  nametext: {
+    fontSize: responsiveFontSize(1.8),
+    fontFamily: 'Rubik-Regular',
+    color: 'black',
+  },
+  detailCtnLead:{
+    paddingHorizontal: responsiveWidth(2),
+    backgroundColor:"green",
+    position: 'absolute',
+    right: responsiveWidth(6),
+    bottom: responsiveHeight(2),
+    borderRadius:responsiveWidth(4)
+  },
+  leadCtn:{
+  },
+  statusText:{
+    fontSize: responsiveFontSize(1.2),
+    fontFamily: 'Rubik-Regular',
+    color:"white",
   }
 });
 

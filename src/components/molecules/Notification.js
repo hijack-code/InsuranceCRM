@@ -25,7 +25,7 @@ import LottieView from 'lottie-react-native';
 
 
 const Notification = ({props}) => {
-  console.log(props, 'props got in topback');
+  console.log(props, 'props got in ');
 
   return (
     <SafeAreaView style={styles.container}>

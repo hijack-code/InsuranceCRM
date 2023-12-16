@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, View, Text, TouchableOpacity,StyleSheet} from 'react-native';
+import {SafeAreaView, View, Text, TouchableOpacity,StyleSheet,ActivityIndicator} from 'react-native';
 
 
 
@@ -9,19 +9,25 @@ import {
     responsiveWidth,
     responsiveFontSize
   } from "react-native-responsive-dimensions";
+import { Colors } from '../../assets/colors';
 
 
   
 
 
-const Button = ({disabled = true, onclick=  () => {console.log("checking  default logingg in!");} , buttonctn, btntext="Button" }) => {
+const Button = ({disabled = true, onclick=  () => {console.log("checking  default logingg in!");} , buttonctn, btntext="Button", loading = false }) => {
 
   return (
 
 
         <View style={buttonctn}>
             <TouchableOpacity onPress={onclick} disabled={ disabled} style={[Buttonstyles.buttonstyle,{backgroundColor: disabled ? "#D6D6D6" : "#007FFF"}]} >
-                    <Text style={Buttonstyles.title} >{btntext}</Text>
+                   {
+                    loading ?     <ActivityIndicator size="small" color={Colors.white} /> : <Text style={Buttonstyles.title} >{btntext}</Text> 
+
+                   }
+                   
+                    
             </TouchableOpacity>
         </View>
 

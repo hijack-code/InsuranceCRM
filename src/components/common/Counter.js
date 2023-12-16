@@ -27,6 +27,7 @@ const Counter = ({
   clientnumberstyle,
   countertitle = 'Button',
   countervalue = 'Button',
+  counteractive = true,
 }) => {
   return (
     <View style={[Counterstyles.container, buttonctn]}>
@@ -34,7 +35,7 @@ const Counter = ({
         <LogoViewer
           Logosource={WatchSvg}
           containerstyle={[Counterstyles.logoImgContainer,{backgroundColor:buttonctn.backgroundColor}]}
-          logostyle={Counterstyles.logoImg}
+          logostyle={ counteractive == true ?  Counterstyles.logoImg : Counterstyles.logoimg2}
         />
       </View>
 
@@ -56,8 +57,10 @@ const Counterstyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    borderRadius: responsiveHeight(2),
+    borderRadius: responsiveHeight(1),
     margin: responsiveWidth(3),
+    padding:responsiveWidth(1),
+
   },
   textCtn: {
   
@@ -72,6 +75,7 @@ const Counterstyles = StyleSheet.create({
     fontSize: responsiveFontSize(2.3),
     fontFamily: 'Rubik-Medium',
     color: 'black',
+    textAlign:"center"
   },
   logoImgContainer: {
     backgroundColor: 'white',
@@ -81,7 +85,15 @@ const Counterstyles = StyleSheet.create({
   logoImg: {
     height: responsiveHeight(4),
     width: responsiveHeight(4),
+    fill:"white"
+    
   },
+  logoimg2:{
+
+    height: responsiveHeight(4),
+    width: responsiveHeight(4),
+    fill:"black"
+  }
 });
 
 export default Counter;

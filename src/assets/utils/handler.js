@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const axiosrequest = (method, data, url) => {
+export const axiosrequest = async (method, data, url) => {
   console.log("api handler started");
   console.log(method, data, url);
   let userInfo = "";
@@ -13,8 +13,9 @@ export const axiosrequest = (method, data, url) => {
       console.log(jsonValue, 'USERINFO in handler');
 
       if (jsonValue != null) {
-        userInfo = JSON.parse(jsonValue)
-      }
+         
+         return JSON.parse(jsonValue)
+      } 
 
    
     } catch (e) {
@@ -23,14 +24,21 @@ export const axiosrequest = (method, data, url) => {
     }
   };
 
-  loadUserInfo();
+  console.log("HERE IN API HANDLER")
+  userInfo = await loadUserInfo();
+  console.log("AFTER USERINFO IN API HANDLER")
+
 
   axios.defaults.baseURL = "https://api.mypolicymate.in"
   // axios.defaults.baseURL = "https://672c-2401-4900-1c8a-6952-cd84-542f-5596-ef6d.ngrok.io";
-  console.log(userInfo.token ,"USERINFO OF API HANDLER")
+  console.log(userInfo ,"USERINFO OF API HANDLER")
 
   let token = userInfo?.token;
+  console.log(userInfo?.token , "TOKEN SENDING IN REQUEST")
   let Authorization = `Bearer ${token}`;
+
+  console.log( `Bearer ${token}` , "Authorization SENDING IN REQUEST")
+
 
   return new Promise((resolve, reject) => {
     axios({

@@ -1,7 +1,6 @@
 import { Platform, StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 
-
 import {
   responsiveHeight,
   responsiveWidth,
@@ -41,7 +40,7 @@ AddclientStyle = StyleSheet.create({
             position: 'relative',
             backgroundColor:"white",
             borderRadius:responsiveHeight(6),
-            marginTop:responsiveHeight(2),
+            marginTop:responsiveHeight(20),
             transform: [{ translateX: -responsiveWidth(5) }], // Move 50 pixels to the left
 
           },
@@ -56,8 +55,8 @@ AddclientStyle = StyleSheet.create({
             justifyContent:"center"
           },
           loginImg:{
-            height:responsiveHeight(22),
-            width:responsiveHeight(30.52),
+            height:responsiveHeight(15),
+            width:responsiveHeight(20.52),
           },
           congratesText:{
             fontSize:responsiveFontSize(4),
@@ -75,8 +74,62 @@ AddclientStyle = StyleSheet.create({
             borderBottomWidth: 1,
             borderColor: Colors.activeprimary,
             marginBottom: responsiveHeight(2),
-            width:responsiveWidth(44),
-            marginLeft:responsiveWidth(20)
+            width:responsiveWidth(38),
+          },
+          buttonmainCtn:{
+            justifyContent:"center",
+            alignItems:"center"
+          },
+          headingText: {
+            fontSize: responsiveFontSize(1.8),
+            fontFamily: 'Rubik-Light',
+            color: 'black',
+            backgroundColor: 'white',
+            width: responsiveWidth(82),
+            marginTop: responsiveHeight(3.7),
+          },
+
+
+          dropdown: {
+            height: responsiveHeight(4),
+            width: responsiveWidth(80),
+            borderBottomColor: "black",
+            borderBottomWidth: 0.5,
+            borderRadius: responsiveWidth(1),
+            paddingHorizontal: 8,
+            marginTop: responsiveHeight(1),
+            backgroundColor: Colors.white,
+          },
+          icon: {
+            marginRight: 5,
+          },
+          label: {
+            position: "absolute",
+            backgroundColor: Colors.white,
+            left: 22,
+            top: 8,
+            zIndex: 999,
+            paddingHorizontal: 8,
+            fontSize: 14,
+            color:Colors.black
+        
+          },
+          placeholderStyle: {
+            fontSize: responsiveFontSize(2),
+            color:Colors.black
+        
+          },
+          selectedTextStyle: {
+            fontSize: responsiveFontSize(2),
+            fontFamily: 'Rubik-Light',
+            color:Colors.black
+          },
+       
+          inputSearchStyle: {
+            height: 40,
+            fontSize: 16,
+            color:Colors.black
+        
           },
 
        

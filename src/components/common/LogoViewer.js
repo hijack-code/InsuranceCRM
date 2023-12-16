@@ -20,7 +20,7 @@ const LogoViewer = ({Logosource , containerstyle, logostyle}) => {
 
 
       <View style={containerstyle}>
-           <Logosource  height={logostyle.height}  width = {logostyle.width}/>
+           <Logosource  height={logostyle.height}  width = {logostyle.width} fill=  {logostyle.fill} />
       </View>
 
     
