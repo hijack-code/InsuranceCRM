@@ -55,15 +55,15 @@ const CustomDrawer = props => {
         {...props}
         contentContainerStyle={{backgroundColor: Colors.white}}>
         <ImageBackground
-          source={require('../../assets/images/profileimage.jpg')}
+          // source={require('../../assets/images/profileimage.png')}
           style={{padding: 20}}>
           <Image
-            source={require('../../assets/images/profileimage.jpg')}
+            source={require('../../assets/images/pImage.png')}
             style={{height: 90, width: 80, borderRadius: 40, marginBottom: 10}}
           />
           <Text
             style={{
-              color: '#fff',
+              color: Colors.black,
               fontSize: 18,
               fontFamily: 'Poppins-Medium',
               marginBottom: 5,
@@ -73,7 +73,7 @@ const CustomDrawer = props => {
           <View style={{flexDirection: 'row'}}>
             <Text
               style={{
-                color: '#fff',
+                color: Colors.black,
                 fontFamily: 'Poppins-Regular',
                 marginRight: 5,
               }}>
@@ -84,12 +84,21 @@ const CustomDrawer = props => {
 
           <Text
             style={{
-              color: '#fff',
+              color: Colors.black,
               fontSize: 14,
               fontFamily:'Poppins-Medium',
               marginBottom: 5,
             }}>
            {userInfo?.email}
+          </Text>
+          <Text
+            style={{
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily:'Poppins-Medium',
+              marginBottom: 2,
+            }}>
+           {userInfo?.mobile}
           </Text>
         </ImageBackground>
         <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>

@@ -71,7 +71,7 @@ const ListView = ({props, data}) => {
     <TouchableOpacity
       onPress={() => {
         //  props.props.navigation.navigate('ClientInfo')
-        props.props.navigation.navigate('ClientInfo', {clientdata: item});
+        props.navigation.navigate('ClientInfo', {clientdata: item});
       }}
       style={styles.item}>
       <View style={styles.profileButton}>

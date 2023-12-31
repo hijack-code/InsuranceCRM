@@ -24,7 +24,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {axiosrequest} from '../../../assets/utils/handler';
 
 const Policydetails = props => {
-  console.log(props.clientdata, 'CLIENT ALL got id policy derail page');
+  // console.log(props.clientdata, 'CLIENT ALL got id policy derail page');
 
   const showToast = text => {
     ToastAndroid.show(text, ToastAndroid.SHORT);
@@ -168,7 +168,6 @@ const Policydetails = props => {
       };
     });
 
-    console.log(policydata, 'POLICY DATAA');
   };
 
   const onproductNameChange = text => {
@@ -242,7 +241,7 @@ const Policydetails = props => {
           },
           endpoint,
         );
-        console.log('Response got in add single policy --> ', res);
+        // console.log('Response got in add single policy --> ', res);
         if (res != '' && res.status == 200) {
           setaddPolicy(!addpolicy);
           showToast('Policy added successfully!');

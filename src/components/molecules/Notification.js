@@ -29,7 +29,7 @@ const Notification = ({props}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.notiText}>No notifications</Text>
+        <Text style={styles.notiText}>No insights availaible</Text>
       <LottieView style={styles.animationCtn} source={require('../../assets/animations/notification2.json')} autoPlay loop />
 
     </SafeAreaView>

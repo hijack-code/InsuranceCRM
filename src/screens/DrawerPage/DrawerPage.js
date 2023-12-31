@@ -36,7 +36,7 @@ const DrawerPage = props => {
             <Home color={color} />
           ),
         }} />
-      <Drawer.Screen name="Pricing" component={PricingScreen}  options={{
+      {/* <Drawer.Screen name="Pricing" component={PricingScreen}  options={{
           drawerIcon: ({color}) => (
             <Bank color={color} />
           ),
@@ -45,7 +45,7 @@ const DrawerPage = props => {
           drawerIcon: ({color}) => (
             <Help color={color} />
           ),
-        }}/>
+        }}/> */}
 
       
     </Drawer.Navigator>

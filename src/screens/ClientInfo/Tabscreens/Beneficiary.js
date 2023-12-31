@@ -5,8 +5,6 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
-  Image,
   SafeAreaView,
 } from 'react-native';
 
@@ -15,12 +13,10 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import {BackSvg} from '../../assets/svgs/SvgImages';
 import LottieView from 'lottie-react-native';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-const fontScale = Dimensions.get('window').fontScale;
+
 const Beneficiary = () => {
   return (
     <SafeAreaView style={styles.container}>

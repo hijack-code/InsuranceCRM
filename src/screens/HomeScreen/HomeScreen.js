@@ -7,10 +7,10 @@ import {
   TextInput,
   ScrollView,
   Image,
-  ToastAndroid
+  ToastAndroid,
 } from 'react-native';
-import { NavigationContainer, DrawerActions } from '@react-navigation/native';
-import { axiosrequest } from '../../assets/utils/handler';
+import {NavigationContainer, DrawerActions} from '@react-navigation/native';
+import {axiosrequest} from '../../assets/utils/handler';
 import HomeScreenStyle from './HomeScreenStyle';
 import Button from '../../components/common/Button';
 
@@ -19,11 +19,12 @@ import LogoViewer from '../../components/common/LogoViewer';
 import Counter from '../../components/common/Counter';
 import SearchIcon from '../../assets/svgs/searchicon.svg';
 
-import {COLORS} from '../../assets/colors.js';
+import {COLORS, Colors} from '../../assets/colors.js';
 
 import {windowWidth} from '../../assets/utils/Dimensions';
 import ListView from '../../components/molecules/ListView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {responsiveFontSize} from 'react-native-responsive-dimensions';
 
 const HomeScreen = props => {
   const [userInfo, setUserInfo] = useState(null);
@@ -41,8 +42,6 @@ const HomeScreen = props => {
         if (jsonValue != null) {
           setUserInfo(JSON.parse(jsonValue));
         }
-
-     
       } catch (e) {
         // error reading value
         console.error(e);
@@ -51,41 +50,34 @@ const HomeScreen = props => {
 
     loadUserInfo();
 
-    getclients()
+    getclients();
   }, [getclients]);
-
 
   const showToast = message => {
     ToastAndroid.show(message, ToastAndroid.SHORT);
   };
 
-
-
-  const getclients= async () => {
-
-    console.log("fetchig OF CLIENT!!");
+  const getclients = async () => {
+    console.log('fetchig OF CLIENT!!');
 
     try {
       // Block of code to try
       let endpoint = `/client`;
-      const res = await axiosrequest('get',{}, endpoint);
+      const res = await axiosrequest('get', {}, endpoint);
 
       console.log('Response got in fetcings clints--> ', res.data);
 
       if (res != '' && res.status == 200) {
         // props.navigation.navigate('OtpVerify', { email: email });
         setClientlist(res?.data?.data);
-
       } else {
       }
     } catch (err) {
       // Block of code to handle errors
-      showToast("Some error occured");
+      showToast('Some error occured');
       console.log(err, 'catch block of api');
     }
-
-
-  }
+  };
 
   return (
     <SafeAreaView style={HomeScreenStyle.container}>
@@ -97,15 +89,12 @@ const HomeScreen = props => {
             onPress={() => {
               // props.props.navigation.dispatch(DrawerActions.openDrawer());
               props.props.navigation.openDrawer();
-
-
-
             }}
             style={HomeScreenStyle.profileButton}>
             <Image
               style={HomeScreenStyle.image}
-              resizeMode="contain"
-              source={require('../../assets/images/profileimage.jpg')}
+              resizeMode="center"
+              source={require('../../assets/images/pImage.png')}
             />
           </TouchableOpacity>
 
@@ -115,20 +104,20 @@ const HomeScreen = props => {
         <View style={HomeScreenStyle.counterCtn}>
           <Counter
             countertitle="Total Clients"
-            countervalue="12000"
+            countervalue={clientlist.length}
             buttonctn={HomeScreenStyle.counterlight}
             clientstyle={HomeScreenStyle.totalclienttext}
             clientnumberstyle={HomeScreenStyle.totalclienttext}
-            counteractive = {false}
+            counteractive={false}
           />
 
           <Counter
             countertitle="Today’s Events"
-            countervalue="12"
+            countervalue="--"
             buttonctn={HomeScreenStyle.counteractive}
             clientstyle={HomeScreenStyle.eventtext}
             clientnumberstyle={HomeScreenStyle.eventtext}
-            counteractive = {true}
+            counteractive={true}
           />
         </View>
 
@@ -145,22 +134,40 @@ const HomeScreen = props => {
             </TouchableOpacity>
           </View>
 
-          <View style={HomeScreenStyle.searchSection}>
-            <TextInput
+          <TouchableOpacity
+            onPress={() => {
+              props.props.navigation.navigate('SearchScreen', {data: clientlist});
+            }}
+            style={HomeScreenStyle.searchSection}>
+            {/* <TextInput
               style={HomeScreenStyle.searchInput}
               placeholder="Search client"
               placeholderTextColor="#d3d3d3"
               onChangeText={searchString => {}}
               underlineColorAndroid="transparent"
-            />
+              editable={false}
+            /> */}
+            <View style={HomeScreenStyle.searchInput}>
+              <Text
+                style={[
+                  HomeScreenStyle.nameText,
+                  {
+                    fontSize: responsiveFontSize(1.8),
+                    color: Colors.textcolor,
+                    fontFamily: 'Rubik-Light',
+                  },
+                ]}>
+                Search Client
+              </Text>
+            </View>
 
             <TouchableOpacity>
               <SearchIcon />
             </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
 
           <View style={HomeScreenStyle.clientlistCtn}>
-            <ListView props={props} data={clientlist} />
+            <ListView props={props.props} data={clientlist} />
           </View>
         </View>
       </View>

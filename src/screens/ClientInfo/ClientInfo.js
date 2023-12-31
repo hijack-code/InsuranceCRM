@@ -25,9 +25,6 @@ const ClientInfo = (props) => {
   const { clientdata } = props.route.params;
 
 
-  console.log(props ,"PROPSS")
-
-  console.log(clientdata ,"clients dataa  PROPSS")
 
 
 
@@ -140,8 +137,8 @@ const ClientInfo = (props) => {
 
         </View>
         <View style={styles.detailCtn}>
-          <Text style={styles.nametext}>Gaurav Yadav</Text>
-          <Text style={styles.nametext}>7689389230</Text>
+          <Text style={styles.nametext}>{clientdata.name}</Text>
+          <Text style={styles.nametext}>{clientdata.phone}</Text>
         </View>
       </View>
       <TabView

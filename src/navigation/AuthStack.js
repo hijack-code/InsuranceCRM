@@ -9,6 +9,8 @@ import ClientInfo from '../screens/ClientInfo/ClientInfo.js';
 import AddClient from '../screens/Addnewclient/AddClient.js';
 import OtpVerify from '../screens/Otpverify/OtpVerify.js';
 import DrawerPage from '../screens/DrawerPage/DrawerPage.js';
+import PolicySummary from '../screens/PolicySummary/PolicySummary.js';
+import SearchScreen from '../screens/SearchPage/SearchScreen.js';
 
 
 
@@ -18,7 +20,6 @@ const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
 
-  console.log("  running authstack js!");
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false,animation: 'slide_from_right'}}>
@@ -31,6 +32,10 @@ const AuthStack = () => {
       <Stack.Screen name="AddClient" component={AddClient} />
       <Stack.Screen name="OtpVerify" component={OtpVerify} />
       <Stack.Screen name="DrawerPage" component={DrawerPage} />
+      <Stack.Screen name="PolicySummary" component={PolicySummary} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
+
+
 
       
 

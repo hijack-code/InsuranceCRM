@@ -145,7 +145,7 @@ HomeScreenStyle = StyleSheet.create({
         },
         image: {
           flex: 1,
-          transform: [{scale: 1.5}],
+          transform: [{scale: 1}],
         },
 
        

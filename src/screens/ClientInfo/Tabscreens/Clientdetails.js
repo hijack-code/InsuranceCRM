@@ -8,7 +8,6 @@ import { Colors } from '../../../assets/colors'
 const Clientdetails = (props) => {
 
 
-  console.log(props.clientdata , "PROPS GOT IN DETAIS PAGE")
 
 
   return (

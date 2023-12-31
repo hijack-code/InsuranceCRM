@@ -24,8 +24,8 @@ import LogoViewer from '../common/LogoViewer';
 
 
 
-const TopBack = ({props}) => {
-  console.log(props, 'props got in topback');
+const TopBack = ({props  , heading = "Add new client"}) => {
+  console.log(props, 'props got in topback' , "---headin" , heading);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,7 +40,7 @@ const TopBack = ({props}) => {
         </TouchableOpacity>
    
 
-        <Text style={styles.headText}>Add new client</Text>
+        <Text style={styles.headText}>{heading}</Text>
       </View>
     </SafeAreaView>
   );
