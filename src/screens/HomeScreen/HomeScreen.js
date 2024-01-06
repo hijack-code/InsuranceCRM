@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useCallback} from 'react';
 import {
   SafeAreaView,
   View,
@@ -13,6 +13,8 @@ import {NavigationContainer, DrawerActions} from '@react-navigation/native';
 import {axiosrequest} from '../../assets/utils/handler';
 import HomeScreenStyle from './HomeScreenStyle';
 import Button from '../../components/common/Button';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 import {NameSvg} from '../../assets/svgs/SvgImages';
 import LogoViewer from '../../components/common/LogoViewer';
@@ -32,26 +34,45 @@ const HomeScreen = props => {
 
   console.log(props, 'PROPSS');
 
-  useEffect(() => {
-    const loadUserInfo = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem('userinfo');
+  const loadUserInfo = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('userinfo');
 
-        console.log(jsonValue, 'USERINFO in homescreen');
+      console.log(jsonValue, 'USERINFO in homescreen');
 
-        if (jsonValue != null) {
-          setUserInfo(JSON.parse(jsonValue));
-        }
-      } catch (e) {
-        // error reading value
-        console.error(e);
+      if (jsonValue != null) {
+        setUserInfo(JSON.parse(jsonValue));
       }
-    };
+    } catch (e) {
+      // error reading value
+      console.error(e);
+    }
+  };
 
-    loadUserInfo();
+  useFocusEffect(
+    useCallback(() => {
+        // Function to run when the screen is focused
+        const onFocus = () => {
+            console.log('Screen is focused');
+            // Your focus-related logic here
 
-    getclients();
-  }, [getclients]);
+            console.log("RUNNING USEEFFECT")
+   
+
+            loadUserInfo();
+        
+            getclients();
+        };
+
+        onFocus();
+
+        return () => {
+            // Optional: Any cleanup logic goes here
+        };
+    }, [])
+);
+
+ 
 
   const showToast = message => {
     ToastAndroid.show(message, ToastAndroid.SHORT);

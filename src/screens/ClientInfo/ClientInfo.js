@@ -1,11 +1,18 @@
 import * as React from 'react';
-import {View, useWindowDimensions, StyleSheet, Image, Text,TouchableOpacity} from 'react-native';
+import {
+  View,
+  useWindowDimensions,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {
   responsiveHeight,
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import {TabView, SceneMap,TabBar} from 'react-native-tab-view';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {windowWidth} from '../../assets/utils/Dimensions';
 import {BackSvg} from '../../assets/svgs/SvgImages';
 import LogoViewer from '../../components/common/LogoViewer';
@@ -14,21 +21,14 @@ import Clientdetails from './Tabscreens/Clientdetails';
 import Events from './Tabscreens/Events';
 import Transaction from './Tabscreens/Transaction';
 import Beneficiary from './Tabscreens/Beneficiary';
-import { Colors } from '../../assets/colors';
+import {Colors} from '../../assets/colors';
 
-
-
-const ClientInfo = (props) => {
-
+const ClientInfo = props => {
   const layout = useWindowDimensions();
 
-  const { clientdata } = props.route.params;
+  const {clientdata} = props.route.params;
 
-
-
-
-
-  const renderScene = ({ route }) => {
+  const renderScene = ({route}) => {
     switch (route.key) {
       case 'first':
         return <Clientdetails clientdata={clientdata} />;
@@ -53,11 +53,6 @@ const ClientInfo = (props) => {
     {key: 'fifth', title: 'Beneficiary'},
   ]);
 
-
-
-
-
-
   const renderTabBar = props => (
     <TabBar
       {...props}
@@ -70,43 +65,38 @@ const ClientInfo = (props) => {
     />
   );
 
-
   const renderStatus = status => {
     switch (status) {
       case 'new_lead':
         return (
-          <View style={[styles.detailCtnLead,{ backgroundColor:"#3D8BFF"}]}>
-
-          <View style={[styles.leadCtn]}>
-            <Text style={styles.statusText}>NEW LEAD</Text>
-          </View>
+          <View style={[styles.detailCtnLead, {backgroundColor: '#3D8BFF'}]}>
+            <View style={[styles.leadCtn]}>
+              <Text style={styles.statusText}>NEW LEAD</Text>
+            </View>
           </View>
         );
       case 'active':
         return (
-          <View style={[styles.detailCtnLead,{ backgroundColor:"#61A60E"}]}>
-
-          <View style={styles.leadCtn}>
-            <Text style={styles.statusText}>ACTIVE</Text>
-          </View>
+          <View style={[styles.detailCtnLead, {backgroundColor: '#61A60E'}]}>
+            <View style={styles.leadCtn}>
+              <Text style={styles.statusText}>ACTIVE</Text>
+            </View>
           </View>
         );
       case 'in_progress':
         return (
-          <View style={[styles.detailCtnLead,{ backgroundColor:"#FF9900"}]}>
-
-          <View style={styles.leadCtn}>
-            <Text style={styles.statusText}>IN PROGRESS</Text>
-          </View>
+          <View style={[styles.detailCtnLead, {backgroundColor: '#FF9900'}]}>
+            <View style={styles.leadCtn}>
+              <Text style={styles.statusText}>IN PROGRESS</Text>
+            </View>
           </View>
         );
       case 'cold_lead':
         return (
-          <View style={[styles.detailCtnLead,{ backgroundColor:"#24B0FF"}]}>
-
-          <View style={styles.leadCtn}>
-            <Text style={styles.statusText}>COLD LEAD</Text>
-          </View>
+          <View style={[styles.detailCtnLead, {backgroundColor: '#24B0FF'}]}>
+            <View style={styles.leadCtn}>
+              <Text style={styles.statusText}>COLD LEAD</Text>
+            </View>
           </View>
         );
       default:
@@ -114,27 +104,43 @@ const ClientInfo = (props) => {
     }
   };
 
+  const getBackgroundColor = (status) => {
+    switch (status) {
+      case 'new_lead':
+        return '#3D8BFF';
+      case 'active':
+        return '#61A60E';
+      case 'in_progress':
+        return '#FF9900';
+      case 'cold_lead':
+        return '#24B0FF';
+      default:
+        return 'gray'; // Default color if none of the conditions are met
+    }
+  };
+
   return (
     <View style={styles.maincontainer}>
       <View style={styles.topCtn}>
-        <TouchableOpacity onPress={() => { props.navigation.goBack() }}>
-        <LogoViewer
-          Logosource={BackSvg}
-          containerstyle={styles.logoImgContainer}
-          logostyle={styles.logoImg}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.goBack();
+          }}>
+          <LogoViewer
+            Logosource={BackSvg}
+            containerstyle={styles.logoImgContainer}
+            logostyle={styles.logoImg}
+          />
         </TouchableOpacity>
         <View style={[styles.item]}>
-          <View style={styles.profileButton}>
-            <Image
-              style={styles.image}
-              resizeMode="contain"
-              source={require('../../assets/images/profileimage.jpg')}
-            />
+          <View style={[styles.profileButton,{ backgroundColor:   getBackgroundColor(clientdata?.status) }]}>
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={styles.profileText}>{clientdata?.name[0]}</Text>
+            </View>
           </View>
 
           {renderStatus(clientdata.status)}
-
         </View>
         <View style={styles.detailCtn}>
           <Text style={styles.nametext}>{clientdata.name}</Text>
@@ -154,9 +160,6 @@ const ClientInfo = (props) => {
     </View>
   );
 };
-
-
-
 
 const styles = StyleSheet.create({
   maincontainer: {
@@ -212,8 +215,7 @@ const styles = StyleSheet.create({
 
   tabBar: {
     flexDirection: 'row',
-    backgroundColor:Colors.white,
-
+    backgroundColor: Colors.white,
   },
   tabItem: {
     flex: 1,
@@ -233,28 +235,33 @@ const styles = StyleSheet.create({
     width: responsiveWidth(34), // Set the width for each tab
     // Other tab styles (e.g., padding, margin)
   },
-  indicatorStyle:{
-    backgroundColor:Colors.activeprimary,
+  indicatorStyle: {
+    backgroundColor: Colors.activeprimary,
     width: responsiveWidth(34), // Set the width for each tab
-
   },
-  detailCtnLead:{
+  detailCtnLead: {
     paddingHorizontal: responsiveWidth(2),
     // position: 'absolute',
     // right: responsiveWidth(6),
     // bottom: responsiveHeight(2),
-    borderRadius:responsiveWidth(4),
-    justifyContent:"center",
-    alignItems:"center",
-    marginTop:responsiveHeight(1)
+    borderRadius: responsiveWidth(4),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: responsiveHeight(1),
   },
-  leadCtn:{
-  },
-  statusText:{
+  leadCtn: {},
+  statusText: {
     fontSize: responsiveFontSize(1.2),
     fontFamily: 'Rubik-Regular',
-    color:"white",
-  }
+    color: 'white',
+  },
+  profileText: {
+    fontSize: responsiveFontSize(4),
+    fontFamily: 'Rubik-Bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1
+  },
 });
 
 export default ClientInfo;

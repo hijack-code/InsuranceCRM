@@ -37,6 +37,8 @@ const AddClient = props => {
 
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const data = [
     {label: 'Active', value: 'active'},
@@ -98,6 +100,8 @@ const AddClient = props => {
   const addnewclient = async () => {
     console.log('ADDITION OF CLIENT!!');
 
+    setLoading(true)
+
     try {
       // Block of code to try
       let endpoint = `/client`;
@@ -116,6 +120,8 @@ const AddClient = props => {
       );
 
       console.log('Response got in add cilient otp--> ', res?.data);
+      setLoading(false)
+
 
       if (res != '' && res.status == 200) {
         setSuccessAdd(true);
@@ -136,6 +142,8 @@ const AddClient = props => {
       });
     } catch (err) {
       // Block of code to handle errors
+      setLoading(false)
+
       showToast('Some error occured');
 
       console.log(err, 'catch block of api');
@@ -371,9 +379,9 @@ const AddClient = props => {
               }
               btntext="Save"
               buttonctn={AddclientStyle.buttonCtn}
+              loading = {loading}
               onclick={() => {
                 // setSuccessAdd(true);
-
                 addnewclient();
               }}
             />
