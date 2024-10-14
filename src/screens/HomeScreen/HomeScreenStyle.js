@@ -84,6 +84,8 @@ HomeScreenStyle = StyleSheet.create({
             marginTop:responsiveHeight(2)
 
           },
+
+         
           listingTitleCtn:{
             display:"flex",
             flexDirection:"row",
@@ -133,15 +135,29 @@ HomeScreenStyle = StyleSheet.create({
           marginTop:responsiveHeight(2),
           height:responsiveHeight(55)
         },
+        initialsText: {
+          color: '#fff',
+          fontSize: 24,
+          fontWeight: '400',
+          textAlign: 'center',
+          fontFamily:'Rubik',
+          
+        },
         profileButton: {
           overflow: 'hidden',
           alignItems: 'center',
           position: 'relative',
           backgroundColor: 'white',
-          height: responsiveHeight(6),
-          width: responsiveHeight(6),
-          borderRadius: responsiveHeight(6),
+          height: responsiveHeight(7),
+          width: responsiveHeight(7),
+          borderRadius: responsiveHeight(7),
           // elevation: 10,
+          backgroundColor: '#007FFF',
+          borderColor: '#007FFF',
+          justifyContent: 'center',
+          
+          
+  
         },
         image: {
           flex: 1,

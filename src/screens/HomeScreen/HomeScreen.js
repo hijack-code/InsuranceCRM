@@ -7,6 +7,7 @@ import {
   TextInput,
   ScrollView,
   Image,
+  FlatList,
   // ToastAndroid,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -16,10 +17,11 @@ import HomeScreenStyle from './HomeScreenStyle';
 import Button from '../../components/common/Button';
 import {useFocusEffect} from '@react-navigation/native';
 
-import {NameSvg} from '../../assets/svgs/SvgImages';
+import {Home, NameSvg} from '../../assets/svgs/SvgImages';
 import LogoViewer from '../../components/common/LogoViewer';
 import Counter from '../../components/common/Counter';
 import SearchIcon from '../../assets/svgs/searchicon.svg';
+
 
 import {COLORS, Colors} from '../../assets/colors.js';
 
@@ -71,6 +73,11 @@ const HomeScreen = props => {
     }, [getclients]),
   );
 
+  const getInitials = (name) => {
+    if (!name) return '';
+    return name.split(' ').map(word => word[0]).slice(0, 2).join('').toUpperCase();
+  };
+
   // const showToast = message => {
   //   ToastAndroid.show(message, ToastAndroid.SHORT);
   // };
@@ -102,21 +109,35 @@ const HomeScreen = props => {
       console.log('Response got in fetcings clints--> ', res.data);
 
       if (res != '' && res.status == 200) {
+        console.log('Setting client list with received data:', res.data.data);
+        // showToastNew('success', 'Success', res?.data?.message);
         // props.navigation.navigate('OtpVerify', { email: email });
+        
         setClientlist(res?.data?.data);
       } else {
+        console.log('No data received or response is invalid:', res);
       }
     } catch (err) {
       // Block of code to handle errors
       // showToast('Some error occured');
+      
+      
       showToastNew('error', 'Error', 'Some error occured');
       console.log(err, 'catch block of api');
     }
   };
 
+
+
+
+
+  
+
   return (
     <SafeAreaView style={HomeScreenStyle.container}>
       {/* <ScrollView automaticallyAdjustKeyboardInsets={true}> */}
+
+  
 
       <View style={HomeScreenStyle.subcontainer}>
         <View style={HomeScreenStyle.nameCtn}>
@@ -126,12 +147,18 @@ const HomeScreen = props => {
               props.props.navigation.openDrawer();
             }}
             style={HomeScreenStyle.profileButton}>
-            <Image
+            {/* <Image
               style={HomeScreenStyle.image}
               resizeMode="center"
               source={require('../../assets/images/pImage.png')}
-            />
+            /> */}
+
+            <Text style={HomeScreenStyle.initialsText}>
+              {getInitials(userInfo?.agency_name)} {/* Display user's initials */}
+            </Text>
           </TouchableOpacity>
+          
+        
 
           <Text style={HomeScreenStyle.nameText}>{userInfo?.agency_name}</Text>
         </View>
@@ -140,11 +167,15 @@ const HomeScreen = props => {
           <Counter
             countertitle="Total Clients"
             countervalue={clientlist.length}
+            
             buttonctn={HomeScreenStyle.counterlight}
             clientstyle={HomeScreenStyle.totalclienttext}
             clientnumberstyle={HomeScreenStyle.totalclienttext}
             counteractive={false}
           />
+
+
+
 
           <Counter
             countertitle="Today’s Events"

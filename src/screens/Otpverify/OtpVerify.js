@@ -93,7 +93,7 @@ const OtpVerify = props => {
       //   status: 200,
       // };
 
-      console.log('Response got in email otp--> ', res);
+      // console.log('Response got in email otp--> ', res);
       // token and success  message
 
       if (res != '' && res.status == 200) {

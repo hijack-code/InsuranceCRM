@@ -78,6 +78,7 @@ const OnboardingScreen = (props, {navigation}) => {
       if (res != '' && res.status == 200) {
         // showToast(res?.data?.message);
         showToastNew('success', 'Success', res?.data?.message);
+        console.log(res.data, "RESPONNNNn")
         props.navigation.navigate('OtpVerify', {email: email});
       } else {
         // showToast(res?.data?.message);
@@ -119,6 +120,7 @@ const OnboardingScreen = (props, {navigation}) => {
         </View>
 
         <Button
+          
           btntext="Send OTP"
           disabled={email != '' && isValid == true ? false : true}
           onclick={() => {

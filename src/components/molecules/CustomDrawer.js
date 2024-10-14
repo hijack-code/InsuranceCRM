@@ -1,43 +1,37 @@
-import React,{useEffect,useState,useContext} from 'react';
+
+
+import React, { useEffect, useState, useContext } from 'react';
 import {
   View,
   Text,
   ImageBackground,
-  Image,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native'; 
 import { AuthContext } from '../../setup/app-context-manager/Authcontext';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import LogoViewer from '../common/LogoViewer';
-import { windowWidth } from '../../assets/utils/Dimensions';
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors } from '../../assets/colors';
-import { Logout, Share } from '../../assets/svgs/SvgImages';
+import { Help, Logout, Share, BackSvg } from '../../assets/svgs/SvgImages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
 const CustomDrawer = props => {
-  const {logout}  = useContext(AuthContext);
-
-
+  const { logout } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState(null);
-
+  const navigation = useNavigation();
+  
   const loadUserInfo = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('userinfo');
-      console.log(jsonValue, 'USERINFO');
       if (jsonValue != null) {
         setUserInfo(JSON.parse(jsonValue));
       }
     } catch (e) {
-      // error reading value
       console.error(e);
     }
   };
@@ -46,131 +40,200 @@ const CustomDrawer = props => {
     loadUserInfo();
   }, []);
 
-
-
+  const getInitials = (name) => {
+    if (!name) return '';
+    return name.split(' ').map(word => word[0]).slice(0, 2).join('').toUpperCase();
+  };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{backgroundColor: Colors.white}}>
-        <ImageBackground
-          // source={require('../../assets/images/profileimage.png')}
-          style={{padding: 20}}>
-          <Image
-            source={require('../../assets/images/pImage.png')}
-            style={{height: 90, width: 80, borderRadius: 40, marginBottom: 10}}
-          />
-          <Text
-            style={{
-              color: Colors.black,
-              fontSize: 18,
-              fontFamily: 'Poppins-Medium',
-              marginBottom: 5,
-            }}>
-           {userInfo?.agency_name}
-          </Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={{
-                color: Colors.black,
-                fontFamily: 'Poppins-Regular',
-                marginRight: 5,
-              }}>
-           {userInfo?.name}
+        contentContainerStyle={{ backgroundColor: Colors.white }}>
+        <ImageBackground style={styles.imageBackground}>
+          {/* Back Button */}
+          <TouchableOpacity
+            onPress={() => navigation.goBack()} // Go back to the previous screen
+            style={styles.backButton}>
+            <BackSvg />
+          </TouchableOpacity>
+          <View style={styles.initialsContainer}>
+            <Text style={styles.initialsText}>
+              {getInitials(userInfo?.agency_name)}
             </Text>
-            {/* <FontAwesome5 name="coins" size={14} color="#fff" /> */}
           </View>
-
-          <Text
-            style={{
-              color: Colors.black,
-              fontSize: 14,
-              fontFamily:'Poppins-Medium',
-              marginBottom: 5,
-            }}>
-           {userInfo?.email}
+          <Text style={styles.userInfoText}>
+            {userInfo?.agency_name}
           </Text>
-          <Text
-            style={{
-              color: Colors.black,
-              fontSize: 14,
-              fontFamily:'Poppins-Medium',
-              marginBottom: 2,
-            }}>
-           {userInfo?.mobile}
+          <Text style={styles.userMobileText}>
+            Phone No.: +91-{userInfo?.mobile}
+          </Text>
+          <Text style={styles.userEmailText}>
+            Email Id: {userInfo?.email}
           </Text>
         </ImageBackground>
-        <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
+        
+        <View style={styles.drawerItemsContainer}>
           <DrawerItemList {...props} />
         </View>
+
+        {/* Footer Section Moved Upward */}
+        <View style={styles.footerContainer}>
+          {/* Help and Support */}
+          <TouchableOpacity 
+            onPress={() => {}} 
+            style={styles.footerButton}>
+            <View style={styles.footerButtonContent}>
+              <LogoViewer
+                Logosource={Help}
+                containerstyle={styles.logoImgContainer}
+                logostyle={styles.logoImg}
+              />
+              <Text style={styles.footerButtonText}>
+                Help and Support
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.footerDivider}></View>
+
+          {/* Tell a Friend */}
+          <TouchableOpacity onPress={() => {}} style={styles.footerButton}>
+            <View style={styles.footerButtonContent}>
+              <LogoViewer
+                Logosource={Share}
+                containerstyle={styles.logoImgContainer}
+                logostyle={styles.logoImg}
+              />
+              <Text style={styles.footerButtonText}>
+                Tell a Friend
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.footerDivider}></View>
+
+          {/* Sign Out */}
+          <TouchableOpacity
+            onPress={() => {
+              logout();
+              props.navigation.reset({
+                index: 0,
+                routes: [{ name: 'Onboarding' }],
+              });
+            }}
+            style={styles.footerButton}>
+            <View style={styles.footerButtonContent}>
+              <LogoViewer
+                Logosource={Logout}
+                containerstyle={styles.logoImgContainer}
+                logostyle={styles.logoImg}
+              />
+              <Text style={styles.footerButtonText}>
+                Sign Out
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </DrawerContentScrollView>
-      <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
-        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            {/* <Ionicons name="share-social-outline" size={22} /> */}
-            <LogoViewer
-          Logosource={Share}
-          containerstyle={styles.logoImgContainer}
-          logostyle={styles.logoImg}
-        />
-            <Text
-              style={{
-                fontSize: 15,
-                fontFamily: 'Roboto-Medium',
-                marginLeft: 5,
-              }}>
-              Tell a Friend
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-
-          logout()
-          // props.navigation.popToTop();
-          props.navigation.reset({
-            index: 0,
-            routes: [{ name: 'Onboarding' }],
-          });
-
-
-        }} style={{paddingVertical: 15}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            {/* <Ionicons name="exit-outline" size={22} /> */}
-            <LogoViewer
-          Logosource={Logout}
-          containerstyle={styles.logoImgContainer}
-          logostyle={styles.logoImg}
-        />
-            <Text
-              style={{
-                fontSize: 15,
-                fontFamily: 'Roboto-Medium',
-                marginLeft: 5,
-              }}>
-              Sign Out
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
 
-
-
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    width: windowWidth,
+  // Styles for user info
+  userInfoText: {
+    color: Colors.black,
+    fontSize: 20,
+    fontFamily: 'Rubik',
+    marginBottom: 5,
+    textAlign: 'center',
+    fontWeight: '500',
+    lineHeight: 25,
   },
-  topCtn: {
-    backgroundColor: Colors.white,
-    display: 'flex',
+  backButton: {
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    zIndex: 1, // Ensure it appears above other components
+    padding: 8, // Add padding for touch area
+    borderRadius: 50, // Make the button area round
+    backgroundColor: 'rgba(255, 255, 255, 0.7)', // Light background for visibility
+  },
+  imageBackground: {
+    padding: 12,
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+  },
+  initialsContainer: {
+    backgroundColor: '#007FFF',
+    height: 93,
+    width: 93,
+    borderRadius: 50,
+    borderWidth: 5,
+    borderColor: '#007FFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  initialsText: {
+    color: '#FFFFFF',
+    fontSize: 48,
+    fontWeight: '400',
+    textAlign: 'center',
+  },
+  userMobileText: {
+    color: Colors.black,
+    fontSize: 13,
+    margin: 5,
+    fontFamily: 'Rubik',
+    textAlign: 'left',
+    lineHeight: 18,
+    fontWeight: '300',
+  },
+  userEmailText: {
+    color: Colors.black,
+    fontSize: 13,
+    fontFamily: 'Rubik',
+    marginBottom: 5,
+    marginTop: 1,
+    textAlign: 'left',
+    lineHeight: 18,
+    fontWeight: '300',
+    
+  },
+  drawerItemsContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop: 0,
+  },
+  footerContainer: {
+    padding: 2,
+    borderTopWidth: 0,
+    borderTopColor: 'transparent',
+  },
+  footerDivider: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#000000',
+    opacity: 0.1,
+    marginVertical: 1,
+    marginHorizontal: 20,
+  },
+  footerButton: {
+    paddingVertical: 15,
+  },
+  footerButtonContent: {
     flexDirection: 'row',
-    width: windowWidth,
-    marginTop: responsiveHeight(1),
-    alignItems:"center"
+    alignItems: 'center',
+  },
+  footerButtonText: {
+    fontSize: 15,
+    fontFamily: 'Rubik',
+    marginLeft: 5,
+    lineHeight: 18,
+    fontWeight: '500',
+    color: '#333333',
   },
   logoImgContainer: {
     backgroundColor: 'white',
@@ -178,35 +241,13 @@ const styles = StyleSheet.create({
     marginLeft: responsiveWidth(1),
     alignItems: 'center',
     justifyContent: 'center',
-    height: responsiveHeight(6),
+    height: responsiveHeight(5),
     width: responsiveWidth(10),
   },
   logoImg: {
     height: responsiveHeight(8),
     width: responsiveWidth(6),
   },
-  profileButton: {
-    overflow: 'hidden',
-    alignItems: 'center',
-    position: 'relative',
-    backgroundColor: 'white',
-    height: responsiveHeight(6),
-    width: responsiveHeight(6),
-    borderRadius: responsiveHeight(6),
-    marginLeft: responsiveWidth(2),
-  },
-  image: {
-    flex: 1,
-    transform: [{scale: 1.5}],
-  },
-  headText:{
-    fontSize:responsiveFontSize(2.2),
-    fontFamily:'Rubik-Regular',
-    color:"black",
-    width:responsiveWidth(82),
-    marginLeft:responsiveWidth(2),
-  }
 });
-
 
 export default CustomDrawer;

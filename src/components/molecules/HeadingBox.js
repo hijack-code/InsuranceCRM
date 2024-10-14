@@ -47,5 +47,4 @@ const HeadingBoxstyles = StyleSheet.create({
     marginTop: responsiveHeight(3.7),
   },
 });
-
 export default HeadingBox;

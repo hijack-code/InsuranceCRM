@@ -461,7 +461,7 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - SocketRocket (0.6.1)
-  - UXCam (3.6.16)
+  - UXCam (3.6.17)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -691,7 +691,7 @@ SPEC CHECKSUMS:
   RNUxcam: 88b57b611dade52a0acd795e1c6411941eac0d2f
   RNVectorIcons: 23b6e11af4aaf104d169b1b0afa7e5cf96c676ce
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  UXCam: 48aaffc77928fc5a70b1ee1f130743d00603df1d
+  UXCam: 14826c417263c24c3eca11b4d00c4aa017e700c5
   Yoga: 3efc43e0d48686ce2e8c60f99d4e6bd349aff981
 
 PODFILE CHECKSUM: dafb6a29925060efeb03e2fe4cf652fc51483f10
