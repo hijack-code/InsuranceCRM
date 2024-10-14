@@ -12,6 +12,8 @@ import HomeIcon from '../../assets/images/tabbar/HomeIcon';
 import PortfolioIcon from '../../assets/images/tabbar/PortfolioIcon';
 import WatchlistIcon from '../../assets/images/tabbar/WatchlistIcon';
 import BellIcon from '../../assets/images/tabbar/BellIcon';
+import MessageIcon from '../../assets/images/tabbar/MessageIcon';
+import MessageActive from '../../assets/images/tabbar/MessageActive';
 
 //active~
 import HomeActive from '../../assets/images/tabbar/homeActive.svg';
@@ -20,6 +22,7 @@ import WatchlistActive from '../../assets/images/tabbar/watchlistActive.svg';
 import BellActive from '../../assets/images/tabbar/bellActive.svg';
 import Notification from '../../components/molecules/Notification';
 import PolicyCenter from '../PolicyCenter/PolicyCenter';
+import MessageScreen from '../MessageScreen/MessageScreen';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -52,9 +55,6 @@ const DashBoard = props => {
           },
         },
       }}>
-
-
-
       <Tab.Screen
         name="Home"
         children={() => <HomeScreen props={props} />}
@@ -109,9 +109,19 @@ const DashBoard = props => {
           },
         }}
       />
-
-
-
+      <Tab.Screen
+        name="MessageScreen"
+        children={() => <MessageScreen props={props} />}
+        options={{
+          tabBarIcon: ({focused}) => {
+            if (focused) {
+              return <MessageActive />;
+            } else {
+              return <MessageIcon />;
+            }
+          },
+        }}
+      />
     </Tab.Navigator>
   );
 };

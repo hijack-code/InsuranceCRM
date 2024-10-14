@@ -4,11 +4,12 @@ import {
   ScrollView,
   View,
   Text,
-  ToastAndroid,
   Image,
   TouchableOpacity,
   Keyboard,
+  // ToastAndroid,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import HeadingBox from '../../components/molecules/HeadingBox';
 import Button from '../../components/common/Button';
 import AddclientStyle from './AddclientStyle';
@@ -27,18 +28,33 @@ import {
 } from 'react-native-responsive-dimensions';
 
 const AddClient = props => {
-  const showToast = text => {
-    if (text != undefined && text != null && text != '') {
-      ToastAndroid.show(text);
+  // const showToast = text => {
+  //   if (text != undefined && text != null && text != '') {
+  //     ToastAndroid.show(text);
+  //   } else {
+  //     ToastAndroid.show('Some error occurred!! ');
+  //   }
+  // };
+  const showToastNew = (type, heading, message) => {
+    if (message !== undefined && message !== null && message !== "") {
+        Toast.show({
+          type: type,
+            text1: heading,
+            text2: message
+        });
     } else {
-      ToastAndroid.show('Some error occurred!! ');
+        Toast.show({
+            type: 'error',
+            text1: "Error",
+            text2: "Something went wrong!"
+        });
     }
-  };
+};
+
 
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [loading, setLoading] = useState(false);
-
 
   const data = [
     {label: 'Active', value: 'active'},
@@ -100,7 +116,7 @@ const AddClient = props => {
   const addnewclient = async () => {
     console.log('ADDITION OF CLIENT!!');
 
-    setLoading(true)
+    setLoading(true);
 
     try {
       // Block of code to try
@@ -114,14 +130,13 @@ const AddClient = props => {
           age: parseInt(singleclient.age),
           profession: singleclient.profession,
           address: singleclient.address,
-          status : value
+          status: value,
         },
         endpoint,
       );
 
       console.log('Response got in add cilient otp--> ', res?.data);
-      setLoading(false)
-
+      setLoading(false);
 
       if (res != '' && res.status == 200) {
         setSuccessAdd(true);
@@ -142,9 +157,10 @@ const AddClient = props => {
       });
     } catch (err) {
       // Block of code to handle errors
-      setLoading(false)
+      setLoading(false);
 
-      showToast('Some error occured');
+      // showToast('Some error occured');
+      showToastNew('error', 'Error', 'Some error occurred');
 
       console.log(err, 'catch block of api');
     }
@@ -379,7 +395,7 @@ const AddClient = props => {
               }
               btntext="Save"
               buttonctn={AddclientStyle.buttonCtn}
-              loading = {loading}
+              loading={loading}
               onclick={() => {
                 // setSuccessAdd(true);
                 addnewclient();

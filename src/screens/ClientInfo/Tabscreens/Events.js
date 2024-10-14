@@ -5,8 +5,9 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  ToastAndroid,
+  // ToastAndroid,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {Colors} from '../../../assets/colors';
 import {EmptyDocSvg} from '../../../assets/svgs/SvgImages';
 import {
@@ -26,9 +27,26 @@ import {Dropdown} from 'react-native-element-dropdown';
 
 const Events = props => {
 
-  const showToast = text => {
-    ToastAndroid.show(text, ToastAndroid.SHORT);
+  // const showToast = text => {
+  //   ToastAndroid.show(text, ToastAndroid.SHORT);
+  // };
+
+  const showToastNew = (type, heading, message) => {
+    if (message && message.trim() !== "") {
+      Toast.show({
+        type: type,       // Can be 'success', 'error', 'info', etc.
+        text1: heading,   // Main heading of the toast
+        text2: message    // Detailed message of the toast
+      });
+    } else {
+      Toast.show({
+        type: 'error',    // Default type if message is empty
+        text1: "Error",   // Default heading
+        text2: "Something went wrong!" // Default message
+      });
+    }
   };
+
 
   const [addpolicy, setaddPolicy] = useState(false);
   const [value, setValue] = useState(null);
@@ -126,7 +144,8 @@ const Events = props => {
         console.log('Response got in add evebt --> ', res);
         if (res != '' && res.status == 200) {
           setaddPolicy(!addpolicy);
-          showToast('Event added successfully!');
+          showToastNew('success', 'Success', 'Event added successfully!');
+          // showToast('Event added successfully!');
           // showToast(res?.data?.message);
           // props.navigation.navigate('OtpVerify', { email: email });
           setPolicyData({
@@ -136,17 +155,20 @@ const Events = props => {
           });
           getAllpolicy();
         } else {
-          showToast(res?.data?.message);
+          showToastNew('error', 'Error', res?.data?.message || 'Some error occurred');
+          // showToast(res?.data?.message);
           // showToast(res?.data?.message);
         }
       } catch (err) {
         // Block of code to handle errors
 
-        showToast('Some error occured');
+        // showToast('Some error occured');
+        showToastNew('error', 'Error', 'Some error occurred');
         console.log(err, 'catch block of api');
       }
     } else {
-      showToast('Fill all fields!');
+      // showToast('Fill all fields!');
+      showToastNew('info', 'Info', 'Fill all fields!');
     }
   };
 
@@ -236,7 +258,8 @@ const Events = props => {
               }}
               buttonctn={styles.savebuttonCtn}
               onCancel={() => {
-                showToast('Cancelled!!');
+                // showToast('Cancelled!!');
+                showToastNew('error', 'Error', 'Cancelled!!');
                 setaddPolicy(false);
               }}
             />

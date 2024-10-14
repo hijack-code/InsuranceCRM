@@ -5,9 +5,10 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  ToastAndroid,
+  // ToastAndroid,
   Dimensions,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import OnboardingStyle from './OnboardingStyle';
 
 import LogoViewer from '../../components/common/LogoViewer';
@@ -25,7 +26,7 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import {showToast} from '../../assets/utils/Helpers';
+import {showToastNew} from '../../assets/utils/Helpers';
 const {width, height} = Dimensions.get('window');
 
 const OnboardingScreen = (props, {navigation}) => {
@@ -61,7 +62,7 @@ const OnboardingScreen = (props, {navigation}) => {
   }
 
   const callOtp = async () => {
-    // props.navigation.navigate('OtpVerify', {email: email});
+    props.navigation.navigate('OtpVerify', {email: email});
 
     console.log('CALLING OTP API');
     setLoading(true)
@@ -75,15 +76,18 @@ const OnboardingScreen = (props, {navigation}) => {
       console.log('Response got in email otp--> ', res);
 
       if (res != '' && res.status == 200) {
-        showToast(res?.data?.message);
+        // showToast(res?.data?.message);
+        showToastNew('success', 'Success', res?.data?.message);
         props.navigation.navigate('OtpVerify', {email: email});
       } else {
         // showToast(res?.data?.message);
-        showToast('Some error occured');
+        // showToast('Some error occured');
+        showToastNew('error','Error','Some error occured');
       }
     } catch (err) {
       // Block of code to handle errors
-      showToast('Some error occured');
+      // showToast('Some error occured');
+      showToastNew('error','Error','Some error occured');
 
       console.log(err, 'catch block of api');
     }
@@ -125,22 +129,22 @@ const OnboardingScreen = (props, {navigation}) => {
           loading={loading}
         />
 
-        <View
+        {/* <View
           style={[OnboardingStyle.buttonCtn, {marginTop: responsiveHeight(7)}]}>
           <ButtonIcon
             disabled={false}
             Logosource={AppleSvg}
             title={'Sign in with Google'}
           />
-        </View>
+        </View> */}
 
-        <View style={[OnboardingStyle.buttonCtn, {marginTop: 0}]}>
+        {/* <View style={[OnboardingStyle.buttonCtn, {marginTop: 0}]}>
           <ButtonIcon
             disabled={false}
             Logosource={GoogleSvg}
             title={'Sign in with Apple'}
           />
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaView>
   );

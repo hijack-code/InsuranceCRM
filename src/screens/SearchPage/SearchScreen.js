@@ -7,9 +7,10 @@ import {
   TextInput,
   ScrollView,
   Image,
-  ToastAndroid,
+  // ToastAndroid,
   StyleSheet,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {
   responsiveHeight,
   responsiveWidth,

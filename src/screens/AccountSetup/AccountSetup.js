@@ -6,26 +6,40 @@ import HeadingBox from '../../components/molecules/HeadingBox';
 import Button from '../../components/common/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {axiosrequest} from '../../assets/utils/handler';
-
+import Toast from 'react-native-toast-message'; 
 import {jwtDecode} from 'jwt-decode';
+// import {  StyleSheet } from 'react-native';
 
 // import "core-js/stable/atob"; // <- polyfill here
 
 import {decode} from 'base-64';
 global.atob = decode;
-
-
-
-
-
-
 const AccountSetup = props => {
 
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
-  const showToast = message => {
-    ToastAndroid.show(message, ToastAndroid.SHORT);
+  // const showToast = message => {
+  //   ToastAndroid.show(message, ToastAndroid.SHORT);
+  // };
+ 
+
+const showToastNew = (type, heading, message) => {
+   if (message && message.trim() !== "") {
+      Toast.show({
+        type: type,       // Can be 'success', 'error', 'info', etc.
+        text1: heading,   // Main heading of the toast
+        text2: message    // Detailed message of the toast
+      });
+    } else {
+      Toast.show({
+        type: 'error',    // Default type if message is empty
+        text1: "Error",   // Default heading
+        text2: "Something went wrong!" // Default message
+      });
+    }
   };
+
+
  
 
   const [userinfo, setUserinfo] = useState({});
@@ -121,9 +135,12 @@ const AccountSetup = props => {
 
         const jsonValue = JSON.stringify(decoded);
         await AsyncStorage.setItem('userinfo', jsonValue);
-        showToast('Success in updating token!');
+        // showToast('Success in updating token!');
 
-        showToast(res?.data?.message);
+        // showToast(res?.data?.message);
+        showToastNew('success', 'Success', 'Token updated successfully!');
+        showToastNew('info', 'Info', res?.data?.message);
+  
 
 
         props.navigation.reset({
@@ -133,13 +150,15 @@ const AccountSetup = props => {
       
       } else {
         console.log("inside else sccount setup  of 200 response");
-        showToast("Some error occurred");
+        // showToast("Some error occurred");
+        showToastNew('error', 'Error', "Some error occurred");
 
         // showToast(res?.data?.message);
       }
     } catch (err) {
       // Block of code to handle errors
-      showToast("Some error occurred");
+      // showToast("Some error occurred");
+      showToastNew('error', 'Error', "Some error occurred");
 
       console.log(err, 'catch block of api');
     }
@@ -193,7 +212,7 @@ const AccountSetup = props => {
         <Button
           onclick={onDone}
           disabled={
-            userinfo.name != '' &&
+            userinfo.name != '' &&     
             userinfo.phone != '' &&
             userinfo.agencyname != ''
               ? false

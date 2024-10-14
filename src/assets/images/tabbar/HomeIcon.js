@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import Svg , {Path} from 'react-native-svg';
+import Svg , {Path,G} from 'react-native-svg';
 
 const HomeIcon = (props) =>{
 

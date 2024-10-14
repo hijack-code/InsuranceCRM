@@ -1,4 +1,4 @@
-import React, {useState, useEffect,useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   SafeAreaView,
   View,
@@ -7,14 +7,14 @@ import {
   TextInput,
   ScrollView,
   Image,
-  ToastAndroid,
+  // ToastAndroid,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {NavigationContainer, DrawerActions} from '@react-navigation/native';
 import {axiosrequest} from '../../assets/utils/handler';
 import HomeScreenStyle from './HomeScreenStyle';
 import Button from '../../components/common/Button';
-import { useFocusEffect } from '@react-navigation/native';
-
+import {useFocusEffect} from '@react-navigation/native';
 
 import {NameSvg} from '../../assets/svgs/SvgImages';
 import LogoViewer from '../../components/common/LogoViewer';
@@ -51,31 +51,44 @@ const HomeScreen = props => {
 
   useFocusEffect(
     useCallback(() => {
-        // Function to run when the screen is focused
-        const onFocus = () => {
-            console.log('Screen is focused');
-            // Your focus-related logic here
+      // Function to run when the screen is focused
+      const onFocus = () => {
+        console.log('Screen is focused');
+        // Your focus-related logic here
 
-            console.log("RUNNING USEEFFECT")
-   
+        console.log('RUNNING USEEFFECT');
 
-            loadUserInfo();
-        
-            getclients();
-        };
+        loadUserInfo();
 
-        onFocus();
+        getclients();
+      };
 
-        return () => {
-            // Optional: Any cleanup logic goes here
-        };
-    }, [])
-);
+      onFocus();
 
- 
+      return () => {
+        // Optional: Any cleanup logic goes here
+      };
+    }, [getclients]),
+  );
 
-  const showToast = message => {
-    ToastAndroid.show(message, ToastAndroid.SHORT);
+  // const showToast = message => {
+  //   ToastAndroid.show(message, ToastAndroid.SHORT);
+  // };
+
+  const showToastNew = (type, heading, message) => {
+    if (message && message.trim() !== '') {
+      Toast.show({
+        type: type, // Can be 'success', 'error', 'info', etc.
+        text1: heading, // Main heading of the toast
+        text2: message, // Detailed message of the toast
+      });
+    } else {
+      Toast.show({
+        type: 'error', // Default type if message is empty
+        text1: 'Error', // Default heading
+        text2: 'Something went wrong!', // Default message
+      });
+    }
   };
 
   const getclients = async () => {
@@ -95,7 +108,8 @@ const HomeScreen = props => {
       }
     } catch (err) {
       // Block of code to handle errors
-      showToast('Some error occured');
+      // showToast('Some error occured');
+      showToastNew('error', 'Error', 'Some error occured');
       console.log(err, 'catch block of api');
     }
   };
@@ -157,7 +171,9 @@ const HomeScreen = props => {
 
           <TouchableOpacity
             onPress={() => {
-              props.props.navigation.navigate('SearchScreen', {data: clientlist});
+              props.props.navigation.navigate('SearchScreen', {
+                data: clientlist,
+              });
             }}
             style={HomeScreenStyle.searchSection}>
             {/* <TextInput

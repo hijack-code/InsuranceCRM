@@ -71,4 +71,14 @@ function PricingScreen({navigation}) {
   );
 }
 
+function MessageScreen({navigation}) {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Button onPress={() => navigation.navigate()} 
+      title="Go to messages"
+     />
+    </View>
+  );
+}
+
 export default DrawerPage;

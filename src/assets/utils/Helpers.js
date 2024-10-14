@@ -1,6 +1,6 @@
 // helpers.js
 
-import { ToastAndroid } from "react-native";
+// import { ToastAndroid } from "react-native";
 import Toast from 'react-native-toast-message';
 
 
@@ -14,38 +14,34 @@ export const capitalizeFirstLetter = (string) => {
 };
 
  
-export const showToastNew = (type , heading , message) => {
-
-    if(message != undefined && message != null && message != ""){
-
+export const showToastNew = (type, heading, message) => {
+    if (message !== undefined && message !== null && message !== "") {
         Toast.show({
             type: type,
             text1: heading,
             text2: message
-          });
-
-    }else{
+        });
+    } else {
         Toast.show({
             type: 'error',
             text1: "Error",
             text2: "Something went wrong!"
-          });
+        });
     }
-
-  
-  }
+};
 
 
 
-export const showToast = message => {
 
 
-    if(message != undefined && message != null && message != ""){
-        ToastAndroid.show(message, ToastAndroid.SHORT);
+// export const showToast = message => {
 
-    }else{
-        ToastAndroid.show("Some error occurred!!", ToastAndroid.SHORT);
 
-    }
-  };
+//     if(message != undefined && message != null && message != ""){
+//         ToastAndroid.show(message, ToastAndroid.SHORT);
 
+//     }else{
+//         ToastAndroid.show("Some error occurred!!", ToastAndroid.SHORT);
+
+//     }
+//   };

@@ -90,4 +90,4 @@ OnboardingStyle = StyleSheet.create({
     })
 
 
-export default OnboardingStyle 
+export default OnboardingStyle;

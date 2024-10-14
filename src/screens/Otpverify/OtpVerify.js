@@ -16,8 +16,9 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  ToastAndroid,
+  // ToastAndroid,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {
   AppleSvg,
   GoogleSvg,
@@ -40,9 +41,26 @@ const OtpVerify = props => {
   const [otploading, setOtpLoading] = useState(false);
 
 
-  const showToast = message => {
-    ToastAndroid.show(message, ToastAndroid.SHORT);
+  // const showToast = message => {
+  //   ToastAndroid.show(message, ToastAndroid.SHORT);
+  // };
+  const showToastNew = (type, heading, message) => {
+    if (message && message.trim() !== "") {
+      Toast.show({
+        type: type,       // Can be 'success', 'error', 'info', etc.
+        text1: heading,   // Main heading of the toast
+        text2: message    // Detailed message of the toast
+      });
+    } else {
+      Toast.show({
+        type: 'error',    // Default type if message is empty
+        text1: "Error",   // Default heading
+        text2: "Something went wrong!" // Default message
+      });
+    }
   };
+
+
 
  
 
@@ -65,7 +83,7 @@ const OtpVerify = props => {
       );
       setOtpLoading(false)
 
-      // //dummy api response
+      //dummy api response
       // res = {
       //   data: {
       //     success: true,
@@ -88,7 +106,8 @@ const OtpVerify = props => {
 
         const jsonValue = JSON.stringify(decoded);
         await AsyncStorage.setItem('userinfo', jsonValue);
-        showToast('Success!');
+        // showToast('Success!');
+        showToastNew('success', 'Success!', 'OTP verified successfully.');
         console.log(res.data, "RESPONNNNn")
 
 
@@ -117,11 +136,14 @@ const OtpVerify = props => {
 
     
       } else {
-        showToast(res?.data?.message);
+        // showToast(res?.data?.message);
+        showToastNew('error', 'Error', res?.data?.message || 'Verification failed.');
+  
       }
     } catch (err) {
       // Block of code to handle errors
-      showToast('Some error occured');
+      // showToast('Some error occured');
+      showToastNew('error', 'Error', 'Some error occurred.');
 
       console.log(err, 'catch block of api');
     }

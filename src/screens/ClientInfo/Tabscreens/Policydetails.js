@@ -5,8 +5,9 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  ToastAndroid,
+  // ToastAndroid,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {Colors} from '../../../assets/colors';
 import {EmptyDocSvg} from '../../../assets/svgs/SvgImages';
 import {
@@ -26,9 +27,25 @@ import {axiosrequest} from '../../../assets/utils/handler';
 const Policydetails = props => {
   // console.log(props.clientdata, 'CLIENT ALL got id policy derail page');
 
-  const showToast = text => {
-    ToastAndroid.show(text, ToastAndroid.SHORT);
+  // const showToast = text => {
+  //   ToastAndroid.show(text, ToastAndroid.SHORT);
+  // };
+  const showToastNew = (type, heading, message) => {
+    if (message && message.trim() !== "") {
+      Toast.show({
+        type: type,       // Can be 'success', 'error', 'info', etc.
+        text1: heading,   // Main heading of the toast
+        text2: message    // Detailed message of the toast
+      });
+    } else {
+      Toast.show({
+        type: 'error',    // Default type if message is empty
+        text1: "Error",   // Default heading
+        text2: "Something went wrong!" // Default message
+      });
+    }
   };
+
 
   const [addpolicy, setaddPolicy] = useState(false);
   const [statusactive, setStatusactive] = useState(false);
@@ -151,7 +168,8 @@ const Policydetails = props => {
         const updatedClientsJson = JSON.stringify(clientsArray);
         await AsyncStorage.setItem('@clients_array', updatedClientsJson);
 
-        showToast('Policy added successfully!');
+        // showToast('Policy added successfully!');
+        showToastNew('success', 'Success', 'Policy added successfully!');
       } else {
         console.log('Client not found');
       }
@@ -244,7 +262,8 @@ const Policydetails = props => {
         // console.log('Response got in add single policy --> ', res);
         if (res != '' && res.status == 200) {
           setaddPolicy(!addpolicy);
-          showToast('Policy added successfully!');
+          // showToast('Policy added successfully!');
+          showToastNew('success', 'Success', 'Policy added successfully!');
           // showToast(res?.data?.message);
           // props.navigation.navigate('OtpVerify', { email: email });
           setPolicyData({
@@ -258,17 +277,21 @@ const Policydetails = props => {
           });
           getAllpolicy();
         } else {
-          showToast(res?.data?.message);
+          // showToast(res?.data?.message);
+          showToastNew('error', 'Error', res?.data?.message || 'An error occurred while adding the policy.');
+
           // showToast(res?.data?.message);
         }
       } catch (err) {
         // Block of code to handle errors
 
-        showToast('Some error occured');
+        // showToast('Some error occured');
+        showToastNew('error', 'Error', 'Some error occurred ');
         console.log(err, 'catch block of api');
       }
     } else {
-      showToast('Fill all fields!');
+      // showToast('Fill all fields!');
+      showToastNew('error', 'Error', 'Fill all fields!');
     }
   };
 
@@ -297,7 +320,8 @@ const Policydetails = props => {
       }
     } catch (err) {
       // Block of code to handle errors
-      showToast('Some error occured');
+      // showToast('Some error occured');
+      showToastNew('error', 'Error', 'Some error occurred ');
 
       console.log(err, 'catch block of api');
     }
@@ -419,7 +443,8 @@ const Policydetails = props => {
               }}
               buttonctn={styles.savebuttonCtn}
               onCancel={() => {
-                showToast('Cancelled!!');
+                // showToast('Cancelled!!');
+                showToastNew('info', 'Cancelled','Cancelled!!');
                 setaddPolicy(false);
               }}
             />
